@@ -8,6 +8,6 @@ require "rake/extensiontask"
 
 task :build => :compile
 
-Rake::ExtensionTask.new("crunch") do |ext|
-  ext.lib_dir = "lib/crunch"
+task :compile do
+  sh "ruby ext/crunch/extconf.rb"
 end

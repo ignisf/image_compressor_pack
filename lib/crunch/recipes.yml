@@ -1,0 +1,11 @@
+mozjpeg:
+  version: 3.1
+  files:
+    - :url: https://github.com/mozilla/mozjpeg/releases/download/v3.1/mozjpeg-3.1-release-source.tar.gz
+      :sha256: deedd88342c5da219f0047d9a290cd58eebe1b7a513564fcd8ebc49670077a1f
+optipng:
+  version: 0.7.5
+  files:
+    - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
+      :sha256: 74e54b798b012dff8993fb8d90185ca83f18cfa4935f4a93b0bcfc33c849619d
+  configure_options: []
