@@ -31,7 +31,7 @@ index 0000000..91380cb
 +        --disable-shared) shift ;;
 +        --prefix)
 +            dir="$( echo $2 | sed 's_/_\\/_g' )"
-+            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" makefile; shift 2 ;;
++            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" Makefile; shift 2 ;;
 +        --) shift ; break ;;
 +        *) echo "Internal error!" ; exit 1 ;;
 +    esac
