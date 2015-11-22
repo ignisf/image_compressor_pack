@@ -4,7 +4,15 @@ require_relative '../../lib/crunch/recipes'
 root = File.expand_path("../../../", __FILE__)
 
 recipes = Crunch.recipes
-recipes.map(&:cook)
+
+recipes.each do |recipe|
+  checkpoint = "#{recipe.target}/#{recipe.name}-#{recipe.version}-#{recipe.host}.installed"
+  unless File.exist?(checkpoint)
+    `rm -rf tmp/#{recipe.host}/ports/#{recipe.name}/#{recipe.version}`
+    recipe.cook
+    FileUtils.touch checkpoint
+  end
+end
 
 paths = Dir.glob(File.join(root, 'ports', recipes.first.host, '**', 'bin'))
 
