@@ -1,4 +1,4 @@
-require 'mini_portile'
+require 'mini_portile2'
 require 'yaml'
 
 module Crunch
