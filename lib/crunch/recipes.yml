@@ -9,3 +9,11 @@ optipng:
     - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
       :sha256: 74e54b798b012dff8993fb8d90185ca83f18cfa4935f4a93b0bcfc33c849619d
   configure_options: []
+pngquant:
+  version: 2.5.0
+  files:
+    - :url: https://github.com/pornel/pngquant/archive/2.5.0.tar.gz
+      :sha256: dc1da76cef077762490c24428ed3fbc96c43a8f026bb9b852ccd38ec39ea50ba
+  patch_files:
+    - 0001-Work-around-mini_portile-s-configure-invocation.patch
+  configure_options: []
