@@ -36,8 +36,7 @@ jhead:
     - 0001-Add-a-configure-shim.patch
     - 0002-Specify-a-default-DESTDIR.patch
     - 0003-Make-the-configure-script-set-the-DESTDIR.patch
-    - 0004-Add-more-options-to-the-configure-script.patch
-    - 0005-Make-the-makefile-install-to-the-proper-location.patch
+    - 0004-Make-the-makefile-install-to-the-proper-location.patch
 pngcrush:
   version: 1.7.88
   files:

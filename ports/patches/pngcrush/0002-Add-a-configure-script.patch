@@ -1,19 +1,19 @@
-From 50611fd13d044676a200883b82431e95a506ec2c Mon Sep 17 00:00:00 2001
+From 5d2e799136c73ae0c4823608cd363f3795e66219 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:46:05 +0200
 Subject: [PATCH 2/2] Add a configure script
 
 ---
- configure | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ configure | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
  create mode 100755 configure
 
 diff --git a/configure b/configure
 new file mode 100755
-index 0000000..313bf62
+index 0000000..91380cb
 --- /dev/null
 +++ b/configure
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,22 @@
 +#!/bin/sh
 +
 +TEMP=`getopt -o '' --long enable-static,disable-shared,prefix:,host: \
@@ -29,7 +29,9 @@ index 0000000..313bf62
 +        --host) shift 2 ;;
 +        --enable-static) shift ;;
 +        --disable-shared) shift ;;
-+        --prefix) sed -i "s/DESTDIR=.*/DESTDIR=$2/" Makefile; shift 2 ;;
++        --prefix)
++            dir="$( echo $2 | sed 's_/_\\/_g' )"
++            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" makefile; shift 2 ;;
 +        --) shift ; break ;;
 +        *) echo "Internal error!" ; exit 1 ;;
 +    esac

@@ -1,20 +1,20 @@
-From d9ae9cfeaf63fae6bc581b83712c98f106c46fe1 Mon Sep 17 00:00:00 2001
+From 99c84e66b7aca6fffa933907d68421c00e50dc78 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 17:57:21 +0200
 Subject: [PATCH 3/4] Make the configure script set the DESTDIR
 
 ---
- configure | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ configure | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/configure b/configure
-index 1a24852..64ef63d 100755
+index 1a24852..222a540 100755
 --- a/configure
 +++ b/configure
-@@ -1 +1,17 @@
+@@ -1 +1,22 @@
  #!/bin/sh
 +
-+TEMP=`getopt -o t:: --long target:: \
++TEMP=`getopt -o '' --long enable-static,disable-shared,prefix:,host: \
 +     -n 'configure' -- "$@"`
 +
 +if [ $? != 0 ] ; then exit 1 ; fi
@@ -24,8 +24,13 @@ index 1a24852..64ef63d 100755
 +
 +while true ; do
 +    case "$1" in
-+        -t|--target) sed -i "s/DESTDIR=.*/DESTDIR=$2/" makefile ; shift 2 ;;
-+        --) shift ; break ;;
++        --host) shift 2 ;;
++        --enable-static) shift ;;
++        --disable-shared) shift ;;
++        --prefix)
++            dir="$( echo $2 | sed 's_/_\\/_g' )"
++            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" makefile; shift 2 ;;
++        --) shift; break ;;
 +        *) echo "Internal error!" ; exit 1 ;;
 +    esac
 +done
