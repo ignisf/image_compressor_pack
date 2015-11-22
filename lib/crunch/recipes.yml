@@ -22,3 +22,8 @@ advancecomp:
   files:
     - :url: https://github.com/amadvance/advancecomp/releases/download/v1.20/advancecomp-1.20.tar.gz
       :sha256: 590a447cfc7ab3a37ec707e13967a0046a81a888c561ebaff5415b1e946da67b
+gifsicle:
+  version: 1.88
+  files:
+    - :url: https://www.lcdf.org/gifsicle/gifsicle-1.88.tar.gz
+      :sha256: 4585d2e683d7f68eb8fcb15504732d71d7ede48ab5963e61915201f9e68305be
