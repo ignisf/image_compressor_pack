@@ -13,6 +13,11 @@ module Crunch
                         else
                           parameters['target']
                         end
+        unless parameters['patch_files'].nil?
+          recipe.patch_files = parameters['patch_files'].map do |file|
+            File.expand_path("../../../ports/patches/#{name}/#{file}", __FILE__)
+          end
+        end
         recipe.configure_options = parameters['configure_options'] unless parameters['configure_options'].nil?
       end
     end
