@@ -1,0 +1,23 @@
+From 8ca49fa1c5181a780c70687cb032a496cbfe97c2 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Sun, 22 Nov 2015 18:28:37 +0200
+Subject: [PATCH 5/5] Make the makefile install to the proper location
+
+---
+ makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index 40c67d2..8201b3d 100644
+--- a/makefile
++++ b/makefile
+@@ -21,4 +21,5 @@ clean:
+ 	rm -f $(objs) jhead
+ 
+ install:
+-	cp jhead ${DESTDIR}/usr/local/bin/
++	mkdir -p ${DESTDIR}/bin/
++	cp jhead ${DESTDIR}/bin/
+-- 
+2.6.2
+

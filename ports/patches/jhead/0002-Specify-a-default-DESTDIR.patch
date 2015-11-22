@@ -1,0 +1,30 @@
+From 800a9432b1dd2f34425ee2bce3578b6d4baeda0f Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Sun, 22 Nov 2015 17:41:05 +0200
+Subject: [PATCH 2/4] Specify a default DESTDIR
+
+---
+ makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/makefile b/makefile
+index 2197f6c..40c67d2 100644
+--- a/makefile
++++ b/makefile
+@@ -4,11 +4,12 @@
+ OBJ=.
+ SRC=.
+ CFLAGS:= $(CFLAGS) -O3 -Wall
++DESTDIR=.
+ 
+ all: jhead
+ 
+ objs = $(OBJ)/jhead.o $(OBJ)/jpgfile.o $(OBJ)/jpgqguess.o $(OBJ)/paths.o \
+-	$(OBJ)/exif.o $(OBJ)/iptc.o $(OBJ)/gpsinfo.o $(OBJ)/makernote.o 
++	$(OBJ)/exif.o $(OBJ)/iptc.o $(OBJ)/gpsinfo.o $(OBJ)/makernote.o
+ 
+ $(OBJ)/%.o:$(SRC)/%.c
+ 	${CC} $(CFLAGS) -c $< -o $@
+-- 
+2.6.2
+

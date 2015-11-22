@@ -27,3 +27,14 @@ gifsicle:
   files:
     - :url: https://www.lcdf.org/gifsicle/gifsicle-1.88.tar.gz
       :sha256: 4585d2e683d7f68eb8fcb15504732d71d7ede48ab5963e61915201f9e68305be
+jhead:
+  version: 3.00
+  files:
+    - :url: http://sentex.net/%7Emwandel/jhead/jhead-3.00.tar.gz
+      :sha256: 88cc01da018e242fe2e05db73f91b6288106858dd70f27506c4989a575d2895e
+  patch_files:
+    - 0001-Add-a-configure-shim.patch
+    - 0002-Specify-a-default-DESTDIR.patch
+    - 0003-Make-the-configure-script-set-the-DESTDIR.patch
+    - 0004-Add-more-options-to-the-configure-script.patch
+    - 0005-Make-the-makefile-install-to-the-proper-location.patch
