@@ -1,0 +1,39 @@
+From 50611fd13d044676a200883b82431e95a506ec2c Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Sun, 22 Nov 2015 18:46:05 +0200
+Subject: [PATCH 2/2] Add a configure script
+
+---
+ configure | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100755 configure
+
+diff --git a/configure b/configure
+new file mode 100755
+index 0000000..313bf62
+--- /dev/null
++++ b/configure
+@@ -0,0 +1,20 @@
++#!/bin/sh
++
++TEMP=`getopt -o '' --long enable-static,disable-shared,prefix:,host: \
++     -n 'configure' -- "$@"`
++
++if [ $? != 0 ] ; then exit 1 ; fi
++
++# Note the quotes around `$TEMP': they are essential!
++eval set -- "$TEMP"
++
++while true ; do
++    case "$1" in
++        --host) shift 2 ;;
++        --enable-static) shift ;;
++        --disable-shared) shift ;;
++        --prefix) sed -i "s/DESTDIR=.*/DESTDIR=$2/" Makefile; shift 2 ;;
++        --) shift ; break ;;
++        *) echo "Internal error!" ; exit 1 ;;
++    esac
++done
+-- 
+2.6.2
+
