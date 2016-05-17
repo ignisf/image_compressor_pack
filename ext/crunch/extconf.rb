@@ -12,6 +12,7 @@ recipes.each do |recipe|
     recipe.cook
     FileUtils.touch checkpoint
   end
+  recipe.activate
 end
 
 paths = Dir.glob(File.join(root, 'ports', recipes.first.host, '**', 'bin'))
