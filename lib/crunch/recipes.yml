@@ -38,10 +38,10 @@ jhead:
     - 0003-Make-the-configure-script-set-the-DESTDIR.patch
     - 0004-Make-the-makefile-install-to-the-proper-location.patch
 pngcrush:
-  version: 1.7.88
+  version: 1.8.1
   files:
-    - :url: http://downloads.sourceforge.net/project/pmt/pngcrush/1.7.88/pngcrush-1.7.88.tar.gz
-      :sha256: e426e3d8e705b057ae8d677980266b9773576e24e4c883053d23646ac6df7dc0
+    - :url: http://downloads.sourceforge.net/project/pmt/pngcrush/1.8.1/pngcrush-1.8.1.tar.gz
+      :sha256: ab299feb0dd77d2e84a043cf773302ad6323733d9b82e8ce76468dd024c0ad63
   patch_files:
     - 0001-Add-an-install-task.patch
     - 0002-Add-a-configure-script.patch
