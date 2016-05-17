@@ -1,19 +1,19 @@
-From 8907fc68662b6f26b8be7e7fb65df10db868c064 Mon Sep 17 00:00:00 2001
+From 81c90eb38be213770a835828070d22ca72afd943 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
-Date: Sun, 22 Nov 2015 15:05:14 +0200
-Subject: [PATCH] Work around mini_portile's configure invocation
+Date: Tue, 17 May 2016 20:06:37 +0300
+Subject: [PATCH] [PATCH] Work around mini_portile's configure invocation
 
 ---
- configure      | 453 +--------------------------------------------------------
- configure.bash | 451 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 453 insertions(+), 451 deletions(-)
+ configure      | 458 +--------------------------------------------------------
+ configure.bash | 456 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 458 insertions(+), 456 deletions(-)
  create mode 100755 configure.bash
 
 diff --git a/configure b/configure
-index 6514d4c..49e92d0 100755
+index 0cadcf0..49e92d0 100755
 --- a/configure
 +++ b/configure
-@@ -1,451 +1,2 @@
+@@ -1,456 +1,2 @@
 -#!/usr/bin/env bash
 -
 -CONFIG="config.mk"
@@ -56,8 +56,8 @@ index 6514d4c..49e92d0 100755
 -        help "--with-lcms2/--without-lcms2  compile with color profile support"
 -if [[ "$OSTYPE" =~ "darwin" ]]; then
 -        help "--with-cocoa/--without-cocoa  use Cocoa framework to read images"
--        help "--with-libpng=<dir>           search for libpng in directory"
 -fi
+-        help "--with-libpng=<dir>           search for libpng in directory"
 -        echo
 -        help "CC=<compiler>                 use given compiler command"
 -        help "CFLAGS=<flags>                pass options to the compiler"
@@ -118,8 +118,7 @@ index 6514d4c..49e92d0 100755
 -        EXTRA_LDFLAGS="$EXTRA_LDFLAGS ${i#*=}"
 -        ;;
 -    *)
--        echo "error: unknown switch ${i%%=*} (see $0 --help for the list)"
--        exit 1
+-        echo "warning: unknown switch ${i%%=*} (see $0 --help for the list)"
 -        ;;
 -    esac
 -done
@@ -146,7 +145,7 @@ index 6514d4c..49e92d0 100755
 -# Append to CFLAGS if compiler supports flag, with optional prerequisite.
 -# Fails on errors and warnings.
 -conditional_cflags() {
--    if [ -z "echo | $("$CC" -xc -S -o /dev/null $2 $1 2>&1)" ]; then
+-    if [ -z "$(echo | "$CC" -xc -S -o /dev/null $2 $1 - 2>&1)" ]; then
 -        cflags "$1"
 -    fi
 -}
@@ -245,7 +244,7 @@ index 6514d4c..49e92d0 100755
 -echo
 -
 -# basic check
--if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - &> /dev/null; then
+-if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - > /dev/null; then
 -    error "Compiler" "$CC failed to compile anything (make sure it's installed and supports C99)"
 -fi
 -
@@ -324,7 +323,13 @@ index 6514d4c..49e92d0 100755
 -fi
 -
 -# pairs of possible *.h and lib*.so locations
--DIRS=("/usr/local/include /usr/local/lib"
+-DIRS=()
+-
+-if command -v >/dev/null libpng-config; then
+-    DIRS+=("$(libpng-config --prefix) $(libpng-config --libdir)")
+-fi
+-
+-DIRS+=("/usr/local/include /usr/local/lib"
 -      "/usr/include /usr/lib"
 -      "/opt/local/include /opt/local/lib" # macports
 -      )
@@ -469,10 +474,10 @@ index 6514d4c..49e92d0 100755
 +./configure.bash $@
 diff --git a/configure.bash b/configure.bash
 new file mode 100755
-index 0000000..6514d4c
+index 0000000..0cadcf0
 --- /dev/null
 +++ b/configure.bash
-@@ -0,0 +1,451 @@
+@@ -0,0 +1,456 @@
 +#!/usr/bin/env bash
 +
 +CONFIG="config.mk"
@@ -515,8 +520,8 @@ index 0000000..6514d4c
 +        help "--with-lcms2/--without-lcms2  compile with color profile support"
 +if [[ "$OSTYPE" =~ "darwin" ]]; then
 +        help "--with-cocoa/--without-cocoa  use Cocoa framework to read images"
-+        help "--with-libpng=<dir>           search for libpng in directory"
 +fi
++        help "--with-libpng=<dir>           search for libpng in directory"
 +        echo
 +        help "CC=<compiler>                 use given compiler command"
 +        help "CFLAGS=<flags>                pass options to the compiler"
@@ -577,8 +582,7 @@ index 0000000..6514d4c
 +        EXTRA_LDFLAGS="$EXTRA_LDFLAGS ${i#*=}"
 +        ;;
 +    *)
-+        echo "error: unknown switch ${i%%=*} (see $0 --help for the list)"
-+        exit 1
++        echo "warning: unknown switch ${i%%=*} (see $0 --help for the list)"
 +        ;;
 +    esac
 +done
@@ -605,7 +609,7 @@ index 0000000..6514d4c
 +# Append to CFLAGS if compiler supports flag, with optional prerequisite.
 +# Fails on errors and warnings.
 +conditional_cflags() {
-+    if [ -z "echo | $("$CC" -xc -S -o /dev/null $2 $1 2>&1)" ]; then
++    if [ -z "$(echo | "$CC" -xc -S -o /dev/null $2 $1 - 2>&1)" ]; then
 +        cflags "$1"
 +    fi
 +}
@@ -704,7 +708,7 @@ index 0000000..6514d4c
 +echo
 +
 +# basic check
-+if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - &> /dev/null; then
++if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - > /dev/null; then
 +    error "Compiler" "$CC failed to compile anything (make sure it's installed and supports C99)"
 +fi
 +
@@ -783,7 +787,13 @@ index 0000000..6514d4c
 +fi
 +
 +# pairs of possible *.h and lib*.so locations
-+DIRS=("/usr/local/include /usr/local/lib"
++DIRS=()
++
++if command -v >/dev/null libpng-config; then
++    DIRS+=("$(libpng-config --prefix) $(libpng-config --libdir)")
++fi
++
++DIRS+=("/usr/local/include /usr/local/lib"
 +      "/usr/include /usr/lib"
 +      "/opt/local/include /opt/local/lib" # macports
 +      )
@@ -925,5 +935,5 @@ index 0000000..6514d4c
 +# Configure static library the same way
 +cp "$CONFIG" lib/
 -- 
-2.6.2
+2.8.2
 

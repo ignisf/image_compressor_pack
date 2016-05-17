@@ -10,10 +10,10 @@ optipng:
       :sha256: 74e54b798b012dff8993fb8d90185ca83f18cfa4935f4a93b0bcfc33c849619d
   configure_options: []
 pngquant:
-  version: 2.5.0
+  version: 2.7.0
   files:
-    - :url: https://github.com/pornel/pngquant/archive/2.5.0.tar.gz
-      :sha256: dc1da76cef077762490c24428ed3fbc96c43a8f026bb9b852ccd38ec39ea50ba
+    - :url: https://github.com/pornel/pngquant/archive/2.7.0.tar.gz
+      :sha256: 3d454355dd4249e380695dc47fe10ca0948f16bcc770dae40da95422bf46e9eb
   patch_files:
     - 0001-Work-around-mini_portile-s-configure-invocation.patch
   configure_options: []
