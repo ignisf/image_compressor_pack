@@ -1,3 +1,8 @@
+libpng:
+  version: 1.6.21
+  files:
+    - :url: http://download.sourceforge.net/libpng/libpng-1.6.21.tar.gz
+      :md5: aca36ec8e0a3b406a5912243bc243717
 mozjpeg:
   version: 3.1
   files:
