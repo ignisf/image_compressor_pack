@@ -31,8 +31,8 @@ pngquant:
     - :url: https://github.com/pornel/pngquant/archive/2.7.0.tar.gz
       :sha256: 3d454355dd4249e380695dc47fe10ca0948f16bcc770dae40da95422bf46e9eb
   patch_files:
-    - 0001-PATCH-Work-around-mini_portile-s-configure-invocatio.patch
-    - 0002-PATCH-Add-mini_portile-directories-to-configure-scri.patch
+    - 0001-Work-around-mini_portile-s-configure-invocation.patch
+    - 0002-Honor-mini_portile-s-lib-and-inc-dirs.patch
   configure_options: []
 advancecomp:
   version: 1.20

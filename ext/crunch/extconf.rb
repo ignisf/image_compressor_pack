@@ -5,6 +5,9 @@ root = File.expand_path("../../../", __FILE__)
 
 recipes = Crunch.recipes
 
+ENV['MINI_PORTILE_LIB_DIRS'] = ''
+ENV['MINI_PORTILE_INC_DIRS'] = ''
+
 recipes.each do |recipe|
   checkpoint = "#{recipe.target}/#{recipe.name}-#{recipe.version}-#{recipe.host}.installed"
   unless File.exist?(checkpoint)
@@ -12,6 +15,8 @@ recipes.each do |recipe|
     recipe.cook
     FileUtils.touch checkpoint
   end
+  ENV['MINI_PORTILE_INC_DIRS'] += "#{recipe.path}/include "
+  ENV['MINI_PORTILE_LIB_DIRS'] += "#{recipe.path}/lib "
   recipe.activate
 end
 
