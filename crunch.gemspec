@@ -28,10 +28,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.extensions    = ["ext/crunch/extconf.rb"]
 
-  spec.add_runtime_dependency "mini_portile2", "~> 2.0.0.rc1"
+  spec.add_runtime_dependency "mini_portile2", "~> 2.0"
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rake-compiler", "~> 0.9"
-  spec.add_development_dependency "rspec", "~> 3.4"
 end
