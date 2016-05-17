@@ -9,6 +9,11 @@ zlib:
     - :url: http://download.sourceforge.net/libpng/zlib-1.2.8.tar.gz
       :md5: 44d667c142d7cda120332623eab69f40
   configure_options: []
+lcms2:
+  version: 2.7
+  files:
+    - :url: http://download.sourceforge.net/lcms/lcms2-2.7.tar.gz
+      :sha256: 4524234ae7de185e6b6da5d31d6875085b2198bc63b1211f7dde6e2d197d6a53
 libpng:
   version: 1.6.21
   files:
@@ -24,7 +29,7 @@ optipng:
   files:
     - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz
       :sha256: 4870631fcbd3825605f00a168b8debf44ea1cda8ef98a73e5411eee97199be80
-  configure_options: []
+  configure_options: ['-with-system-libs']
 pngquant:
   version: 2.7.0
   files:
