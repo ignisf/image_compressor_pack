@@ -1,3 +1,8 @@
+nasm:
+  version: 2.12.01
+  files:
+    - :url: http://www.nasm.us/pub/nasm/releasebuilds/2.12.01/nasm-2.12.01.tar.gz
+      :sha256: 4cab94c041ae85740b47d92d0a25dd2325f05b2378dcf6fac4d09c49c62ee481
 zlib:
   version: 1.2.8
   files:
