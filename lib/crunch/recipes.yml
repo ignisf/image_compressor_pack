@@ -8,7 +8,7 @@ zlib:
   files:
     - :url: http://download.sourceforge.net/libpng/zlib-1.2.8.tar.gz
       :md5: 44d667c142d7cda120332623eab69f40
-  configure_options: []
+  configure_options: ['--static']
 lcms2:
   version: 2.7
   files:
