@@ -82,3 +82,6 @@ jpegoptim:
   files:
     - :url: http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
       :sha256: 233d4ae09273cb977e162671f4767be7ef5d96e8c1888d3ed4aa70c4dac1a34c
+  patch_files:
+    - 0001-Link-lm-after-ljpeg.patch
+  configure_options: ['LDFLAGS=-static']
