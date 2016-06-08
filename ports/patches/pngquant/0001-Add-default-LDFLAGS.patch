@@ -1,0 +1,80 @@
+From 27f56e11729ccff0272136acd8cd9ac23216e7a0 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Wed, 8 Jun 2016 22:49:59 +0300
+Subject: [PATCH 1/2] Add default LDFLAGS
+
+---
+ configure | 45 ++-------------------------------------------
+ 1 file changed, 2 insertions(+), 43 deletions(-)
+
+diff --git a/configure b/configure
+index 9f242f2..1695693 100755
+--- a/configure
++++ b/configure
+@@ -15,6 +15,7 @@ else
+     COCOA_READER=0
+     LCMS2=auto
+ fi
++LDFLAGS="-lpng -static-libgcc -static"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+@@ -337,54 +338,12 @@ SUCCESS=0
+ if echo "#include \"png.h\"
+     int main(){
+     return !png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+-}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - &> /dev/null; then
++}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - ; then
+     status "libpng" "custom flags"
+     SUCCESS=1
+ fi
+ 
+ if [ "$SUCCESS" -eq 0 ]; then
+-    # try static in the given directory
+-    PNGH=$(find_h "$LIBPNG_DIR" "png.h")
+-    if [ -n "$PNGH" ]; then
+-        PNGH_STRING=$(pngh_string "$PNGH")
+-        PNGH_MAJMIN=$(pngh_majmin "$PNGH")
+-        if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
+-            LIBPNGA=$(find_f "$LIBPNG_DIR" "libpng${PNGH_MAJMIN}.a")
+-            if [ -n "$LIBPNGA" ]; then
+-                cflags "-I${PNGH%/*}"
+-                lflags "${LIBPNGA}"
+-                status "libpng" "static (${PNGH_STRING})"
+-                SUCCESS=1
+-            fi
+-        fi
+-    fi
+-fi
+-# try shared
+-if [ "$SUCCESS" -eq 0 ]; then
+-    if find_pkgconfig libpng; then
+-        SUCCESS=1
+-    else
+-        for i in "${DIRS[@]}"; do
+-            DIR=($i)
+-            PNGH=$(find_h "${DIR[0]}" "png.h")
+-            if [ -n "$PNGH" ]; then
+-                PNGH_STRING=$(pngh_string "$PNGH")
+-                PNGH_MAJMIN=$(pngh_majmin "$PNGH")
+-                if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
+-                    LIBPNGSO=$(find_f "${DIR[1]}" "libpng${PNGH_MAJMIN}.$SOLIBSUFFIX*")
+-                    if [ -n "$LIBPNGSO" ]; then
+-                        cflags "-I${PNGH%/*}"
+-                        lflags "-L${LIBPNGSO%/*} -lpng${PNGH_MAJMIN}"
+-                        status "libpng" "shared (${PNGH_STRING})"
+-                        SUCCESS=1
+-                        break
+-                    fi
+-                fi
+-            fi
+-        done
+-    fi
+-fi
+-if [ "$SUCCESS" -eq 0 ]; then
+     if [[ "$OSTYPE" =~ "darwin" ]]; then
+         LIBPNG_CMD='`brew install libpng`'
+     else
+-- 
+2.8.3
+

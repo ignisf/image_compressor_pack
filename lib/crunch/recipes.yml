@@ -30,15 +30,15 @@ optipng:
     - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz
       :sha256: 4870631fcbd3825605f00a168b8debf44ea1cda8ef98a73e5411eee97199be80
   configure_options: ['-with-system-libs']
-pngquant:
-  version: 2.7.0
-  files:
-    - :url: https://github.com/pornel/pngquant/archive/2.7.0.tar.gz
-      :sha256: 3d454355dd4249e380695dc47fe10ca0948f16bcc770dae40da95422bf46e9eb
-  patch_files:
-    - 0001-Work-around-mini_portile-s-configure-invocation.patch
-    - 0002-Honor-mini_portile-s-lib-and-inc-dirs.patch
-  configure_options: []
+# pngquant:
+#   version: 2.7.1
+#   files:
+#     - :url: https://pngquant.org/pngquant-2.7.1-src.tar.gz
+#       :sha1: a14f66a5b85bf65f432ce16bf029bee344a5d915
+#   patch_files:
+#     - 0001-Add-default-LDFLAGS.patch
+#     - 0002-Work-around-mini-portile-configure-invocation.patch
+#   configure_options: []
 advancecomp:
   version: 1.20
   files:
