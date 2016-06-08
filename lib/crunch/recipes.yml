@@ -67,6 +67,7 @@ jhead:
     - 0002-Specify-a-default-DESTDIR.patch
     - 0003-Make-the-configure-script-set-the-DESTDIR.patch
     - 0004-Make-the-makefile-install-to-the-proper-location.patch
+    - 0005-Produce-a-static-binary.patch
 pngcrush:
   version: 1.8.1
   files:

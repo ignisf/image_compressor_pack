@@ -1,7 +1,7 @@
-From bd2941933f3a8a76d59a2be3cc0381fa73580f50 Mon Sep 17 00:00:00 2001
+From fbbd4f0cba3e832feef2a2664e2ff7e30d0abee8 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 16:37:04 +0200
-Subject: [PATCH 1/4] Add a configure shim
+Subject: [PATCH 1/5] Add a configure shim
 
 To work around mini_portile2's configuration process
 ---
@@ -17,5 +17,5 @@ index 0000000..1a24852
 @@ -0,0 +1 @@
 +#!/bin/sh
 -- 
-2.6.2
+2.8.3
 
