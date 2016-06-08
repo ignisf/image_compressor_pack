@@ -20,6 +20,9 @@ libpng:
   files:
     - :url: http://download.sourceforge.net/libpng/libpng-1.6.21.tar.gz
       :md5: aca36ec8e0a3b406a5912243bc243717
+  patch_files:
+    - 0001-Do-not-build-binary-utilities.patch
+  configure_options: ['--enable-static', '--disable-shared', '--without-binconfigs', '--disable-unversioned-libpng-pc', '--disable-unversioned-libpng-config']
 mozjpeg:
   version: 3.1
   files:
