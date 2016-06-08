@@ -1,0 +1,35 @@
+From ef60a1c883d5159cc3e521a8b29993a4e828b6cd Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 01:39:55 +0300
+Subject: [PATCH] Allow passing LDFLAGS as configure arg
+
+---
+ configure | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/configure b/configure
+index 7ab199e..67695e4 100755
+--- a/configure
++++ b/configure
+@@ -146,6 +146,9 @@ do
+         # Can't use the system-supplied libpng without the system-supplied zlib.
+         with_system_libpng=0
+         ;;
++    LDFLAGS=* )
++        export LDFLAGS="$optarg"
++        ;;
+     * )
+         echo "$0: error: unknown option: $arg"
+         echo "Type \"$0 -help\" for help"
+@@ -154,6 +157,8 @@ do
+     esac
+ done
+ 
++echo $LDFLAGS
++
+ if test ! -f "$0"
+ then
+     echo "$0: error: cannot find myself; rerun with an absolute file name"
+-- 
+2.8.3
+

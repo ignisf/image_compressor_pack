@@ -33,7 +33,9 @@ optipng:
   files:
     - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz
       :sha256: 4870631fcbd3825605f00a168b8debf44ea1cda8ef98a73e5411eee97199be80
-  configure_options: ['-with-system-libs']
+  configure_options: ['-with-system-libs', 'LDFLAGS=-static']
+  patch_files:
+    - 0001-Allow-passing-LDFLAGS-as-configure-arg.patch
 # pngquant:
 #   version: 2.7.1
 #   files:
