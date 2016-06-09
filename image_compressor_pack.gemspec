@@ -8,6 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ImageCompressorPack::VERSION
   spec.authors       = ["Petko Bordjukov"]
   spec.email         = ["bordjukov@gmail.com"]
+  spec.cert_chain    = ['certs/ignisf.pem']
+  spec.signing_key   = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 
   spec.summary       = %q{A distribution of image optimization utilities.}
   spec.description   = %q{This gem packs a bunch of useful utilities for image optimization for use with image_optim.}
