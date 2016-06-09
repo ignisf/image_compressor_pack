@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'crunch/version'
+require 'image_compressor_pack/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "crunch"
-  spec.version       = Crunch::VERSION
+  spec.name          = "image_compressor_pack"
+  spec.version       = ImageCompressorPack::VERSION
   spec.authors       = ["Petko Bordjukov"]
   spec.email         = ["bordjukov@gmail.com"]
 
   spec.summary       = %q{A distribution of image optimization utilities.}
   spec.description   = %q{This gem packs a bunch of useful utilities for image optimization for use with image_optim.}
-  spec.homepage      = "https://github.com/ignisf/crunch"
+  spec.homepage      = "https://github.com/ignisf/image_compressor_pack"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.files        += `git ls-files -o -z ports/archives`.split("\x0")
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/crunch/extconf.rb"]
+  spec.extensions    = ["ext/image_compressor_pack/extconf.rb"]
 
   spec.add_runtime_dependency "mini_portile2", "~> 2.0"
 

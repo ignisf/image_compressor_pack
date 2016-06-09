@@ -1,16 +1,16 @@
 require 'bundler/gem_tasks'
-require 'crunch/recipes'
+require 'image_compressor_pack/recipes'
 
 desc 'Compile all recipes'
 task :compile do
-  sh 'ruby ext/crunch/extconf.rb'
+  sh 'ruby ext/image_compressor_pack/extconf.rb'
 end
 
 module Helpers
   module_function
 
   def binary_gemspec(platform = Gem::Platform.local)
-    gemspec = eval(File.read 'crunch.gemspec')
+    gemspec = eval(File.read 'image_compressor_pack.gemspec')
     gemspec.platform = platform
     gemspec
   end
@@ -48,7 +48,7 @@ end
 
 desc 'Download all recipe archives'
 task :download do
-  Crunch.recipes.each(&:download)
+  ImageCompressorPack.recipes.each(&:download)
 end
 
 task build: [:clean, :download]

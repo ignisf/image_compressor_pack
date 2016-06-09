@@ -2,7 +2,7 @@ require 'mini_portile2'
 require 'yaml'
 require 'rbconfig'
 
-module Crunch
+module ImageCompressorPack
   def self.recipes
     unless RbConfig::CONFIG['target_os'] =~ /darwin/
       statically_linked_recipes
