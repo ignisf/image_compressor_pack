@@ -1,10 +1,10 @@
 require 'mini_portile2'
 require 'yaml'
-require 'rubygems'
+require 'rbconfig'
 
 module Crunch
   def self.recipes
-    unless Gem::Platform.local.os =~ /darwin/
+    unless RbConfig::CONFIG['target_os'] =~ /darwin/
       statically_linked_recipes
     else
       dynamically_linked_recipes
