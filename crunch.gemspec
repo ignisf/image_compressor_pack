@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files        += `git ls-files -o -z ports/archives`.split("\x0")
   spec.require_paths = ["lib"]
   spec.extensions    = ["ext/crunch/extconf.rb"]
 
