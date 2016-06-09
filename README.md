@@ -1,4 +1,4 @@
-# Crunch
+# Image Compressor Pack
 
 A source distribution of a bunch of lossy and lossless image optimisation
 utilities for use with `image_optim`. Created because I didn't trust the
@@ -10,7 +10,7 @@ compilation from source.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'crunch', github: 'ignisf/crunch'
+gem 'image_compressor_pack', github: 'ignisf/image_compressor_pack'
 ```
 
 And then execute:
@@ -23,7 +23,8 @@ For use in Rails with `image_optim`. Just adding it to your `Gemfile` should be
 enough to add most of the utilities `image_optim` has workers for to the `PATH`.
 
 At this point `image_optim_pack` supports `svgo` and `pngout` which are not
-included in `crunch`. `svgo` requires nodejs and `pngout`'s source is not open.
+included in `image_compressor_pack`. `svgo` requires nodejs and `pngout`'s
+source is not open.
 
 To exclude them, use the following in your Rails environment configuration or
 appropriate initialiser:
@@ -36,7 +37,7 @@ config.assets.image_optim = {skip_missing_workers: true,
 
 See https://github.com/toy/image_optim#from-rails for more info on Rails
 configuration or https://github.com/toy/image_optim#configuration if you are
-using `image_optim` and `crunch` outside of Rails.
+using `image_optim` and `image_compressor_pack` outside of Rails.
 
 ## License
 

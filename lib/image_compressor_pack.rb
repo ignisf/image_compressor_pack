@@ -1,7 +1,7 @@
-require 'crunch/recipes'
-require 'crunch/version'
+require 'image_compressor_pack/recipes'
+require 'image_compressor_pack/version'
 
-module Crunch
+module ImageCompressorPack
   def self.paths
     root = File.expand_path("../../", __FILE__)
     relative_paths = YAML.load_file File.expand_path('../.paths.yml', __FILE__)
@@ -21,4 +21,4 @@ module Crunch
   end
 end
 
-Crunch.activate
+ImageCompressorPack.activate

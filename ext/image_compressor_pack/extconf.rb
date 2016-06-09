@@ -1,9 +1,9 @@
 require 'fileutils'
-require_relative '../../lib/crunch/recipes'
+require_relative '../../lib/image_compressor_pack/recipes'
 
 root = File.expand_path("../../../", __FILE__)
 
-recipes = Crunch.recipes
+recipes = ImageCompressorPack.recipes
 
 recipes.each do |recipe|
   checkpoint = "#{recipe.target}/#{recipe.name}-#{recipe.version}-#{recipe.host}.installed"
