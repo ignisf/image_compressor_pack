@@ -15,10 +15,11 @@ recipes.each do |recipe|
   recipe.activate
 end
 
-paths = Dir.glob(File.join(root, 'ports', recipes.first.host, '**', 'bin'))
+absolute_paths = Dir.glob(File.join(root, 'ports', recipes.first.host, '**', 'bin'))
+relative_paths = absolute_paths.map { |path| path.gsub(/#{root}\//, '') }
 
 File.open(File.join(root, 'lib', '.paths.yml'), 'w') do |f|
-  f.puts paths.to_yaml
+  f.puts relative_paths.to_yaml
 end
 
 create_makefile('crunch/crunch')
