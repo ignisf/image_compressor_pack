@@ -10,5 +10,6 @@ matrix:
       dist: trusty
       sudo: true
 script:
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export CC=gcc-4.8; fi
   - bundle exec rake compile
 cache: bundler
