@@ -1,0 +1,47 @@
+From 28212c119b915202ae3f53f77bd28b68ad481458 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 03:11:07 +0300
+Subject: [PATCH 5/5] Remove lcms2 check
+
+---
+ configure.bash | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
+
+diff --git a/configure.bash b/configure.bash
+index 0ada8a5..4b8c80e 100755
+--- a/configure.bash
++++ b/configure.bash
+@@ -15,7 +15,7 @@ else
+     COCOA_READER=0
+     LCMS2=auto
+ fi
+-LDFLAGS="-lpng -lz -static"
++LDFLAGS="-lpng -lz -llcms2 -lpthread -static"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+@@ -359,20 +359,7 @@ if [ "$HAS_LIBPNG" -eq 0 ]; then
+     error "libpng" "not found (try: $LIBPNG_CMD)"
+ fi
+ 
+-# lcms2
+-if [ "$LCMS2" != 0 ]; then
+-    if find_library "lcms2" "lcms2" "lcms2.h" "liblcms2.a" "liblcms2.$SOLIBSUFFIX*"; then
+-        cflags "-DUSE_LCMS=1"
+-    else
+-        if [ "$LCMS2" = 'auto' ]; then
+-            status "lcms2" "no"
+-        else
+-            error "lcms2" "not found (please install libcms2-devel package)"
+-        fi
+-    fi
+-else
+-    status "lcms2" "no"
+-fi
++cflags "-DUSE_LCMS=1"
+ 
+ echo
+ 
+-- 
+2.8.3
+

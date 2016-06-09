@@ -1,0 +1,24 @@
+From 0a57a934ba38621c666df40abba6f83cb6e32026 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 02:54:43 +0300
+Subject: [PATCH 2/5] Add default LDFLAGS
+
+---
+ configure.bash | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configure.bash b/configure.bash
+index 7308b9d..a1ec1de 100755
+--- a/configure.bash
++++ b/configure.bash
+@@ -15,6 +15,7 @@ else
+     COCOA_READER=0
+     LCMS2=auto
+ fi
++LDFLAGS="-lpng -static"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+-- 
+2.8.3
+

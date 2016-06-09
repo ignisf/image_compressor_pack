@@ -1,19 +1,19 @@
-From 9a3e2968721d67cfdab51a31fc753f5d426310df Mon Sep 17 00:00:00 2001
+From 2a2d11aa8ebd7942e4ff5e03bcdf77dc1a10462b Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
-Date: Wed, 8 Jun 2016 22:51:18 +0300
-Subject: [PATCH 2/2] Work around mini portile configure invocation
+Date: Thu, 9 Jun 2016 02:51:12 +0300
+Subject: [PATCH 1/5] Work around mini portile's configure invocation
 
 ---
- configure      | 417 +--------------------------------------------------------
- configure.bash | 415 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 417 insertions(+), 415 deletions(-)
+ configure      | 471 +--------------------------------------------------------
+ configure.bash | 469 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 471 insertions(+), 469 deletions(-)
  create mode 100755 configure.bash
 
 diff --git a/configure b/configure
-index 1695693..49e92d0 100755
+index 7308b9d..49e92d0 100755
 --- a/configure
 +++ b/configure
-@@ -1,415 +1,2 @@
+@@ -1,469 +1,2 @@
 -#!/usr/bin/env bash
 -
 -CONFIG="config.mk"
@@ -31,7 +31,6 @@ index 1695693..49e92d0 100755
 -    COCOA_READER=0
 -    LCMS2=auto
 -fi
--LDFLAGS="-lpng -static-libgcc -static"
 -EXTRA_CFLAGS=
 -EXTRA_LDFLAGS=
 -
@@ -162,7 +161,7 @@ index 1695693..49e92d0 100755
 -}
 -
 -find_pkgconfig() {
--    LIBNAME=$1
+-    local LIBNAME=$1
 -    if pkg-config --exists "$LIBNAME" &> /dev/null; then
 -        cflags "$(pkg-config --cflags "$LIBNAME")"
 -        lflags "$(pkg-config --libs "$LIBNAME")"
@@ -173,13 +172,13 @@ index 1695693..49e92d0 100755
 -}
 -
 -find_static() {
--    LIBNAME=$1
--    HEADERPATTERN=$2
--    STATICPATTERN=$3
+-    local LIBNAME=$1
+-    local HEADERPATTERN=$2
+-    local STATICPATTERN=$3
 -
--    HPATH=$(find_h . "$HEADERPATTERN")
+-    local HPATH=$(find_h . "$HEADERPATTERN")
 -    if [ -n "$HPATH" ]; then
--        APATH=$(find_f . "$STATICPATTERN")
+-        local APATH=$(find_f . "$STATICPATTERN")
 -        if [ -n "$APATH" ]; then
 -            cflags "-I${HPATH%/*}"
 -            lflags "${APATH}"
@@ -190,12 +189,32 @@ index 1695693..49e92d0 100755
 -    return 1
 -}
 -
+-find_dynamic() {
+-    local LIBNAME=$1
+-    local HEADERPATTERN=$2
+-    local DYNAMICPATTERN=$3
+-    local HEADERDIR=$4
+-    local LIBDIR=$5
+-
+-    local HPATH=$(find_h "$HEADERDIR" "$HEADERPATTERN")
+-    if [ -n "$HPATH" ]; then
+-        local SOPATH=$(find_f "$LIBDIR" "$DYNAMICPATTERN")
+-        if [ -n "$SOPATH" ]; then
+-            cflags "-I${HPATH%/*}"
+-            lflags "-L${SOPATH%/*} -l$DYNAMICLIBNAME"
+-            status "$LIBNAME" "shared ... $SOPATH"
+-            return 0
+-        fi
+-    fi
+-    return 1
+-}
+-
 -find_library() {
--    LIBNAME=$1
--    DYNAMICLIBNAME=$2
--    HEADERPATTERN=$3
--    STATICPATTERN=$4
--    DYNAMICPATTERN=$5
+-    local LIBNAME=$1
+-    local DYNAMICLIBNAME=$2
+-    local HEADERPATTERN=$3
+-    local STATICPATTERN=$4
+-    local DYNAMICPATTERN=$5
 -
 -    # try static in current directory first
 -    if find_static "$LIBNAME" "$HEADERPATTERN" "$STATICPATTERN"; then
@@ -209,15 +228,8 @@ index 1695693..49e92d0 100755
 -
 -    for i in "${DIRS[@]}"; do
 -        DIR=($i)
--        HPATH=$(find_h "${DIR[0]}" "$HEADERPATTERN")
--        if [ -n "$HPATH" ]; then
--            SOPATH=$(find_f "${DIR[1]}" "$DYNAMICPATTERN")
--            if [ -n "$SOPATH" ]; then
--                cflags "-I${HPATH%/*}"
--                lflags "-L${SOPATH%/*} -l$DYNAMICLIBNAME"
--                status "$LIBNAME" "shared ... $SOPATH"
--                return 0
--            fi
+-        if find_dynamic "$LIBNAME" "$HEADERPATTERN" "$DYNAMICPATTERN" "${DIR[0]}" "${DIR[1]}"; then
+-            return 0
 -        fi
 -    done
 -    return 1
@@ -350,16 +362,58 @@ index 1695693..49e92d0 100755
 -
 -# libpng
 -# try if given flags are enough
--SUCCESS=0
+-HAS_LIBPNG=0
 -if echo "#include \"png.h\"
 -    int main(){
 -    return !png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
--}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - ; then
+-}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - &> /dev/null; then
 -    status "libpng" "custom flags"
--    SUCCESS=1
+-    HAS_LIBPNG=1
 -fi
 -
--if [ "$SUCCESS" -eq 0 ]; then
+-if [ "$HAS_LIBPNG" -eq 0 ]; then
+-    # try static in the given directory
+-    PNGH=$(find_h "$LIBPNG_DIR" "png.h")
+-    if [ -n "$PNGH" ]; then
+-        PNGH_STRING=$(pngh_string "$PNGH")
+-        PNGH_MAJMIN=$(pngh_majmin "$PNGH")
+-        if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
+-            LIBPNGA=$(find_f "$LIBPNG_DIR" "libpng${PNGH_MAJMIN}.a")
+-            if [ -n "$LIBPNGA" ]; then
+-                cflags "-I${PNGH%/*}"
+-                lflags "${LIBPNGA}"
+-                status "libpng" "static (${PNGH_STRING})"
+-                HAS_LIBPNG=1
+-            fi
+-        fi
+-    fi
+-fi
+-# try shared
+-if [ "$HAS_LIBPNG" -eq 0 ]; then
+-    if find_pkgconfig libpng; then
+-        HAS_LIBPNG=1
+-    else
+-        for i in "${DIRS[@]}"; do
+-            DIR=($i)
+-            PNGH=$(find_h "${DIR[0]}" "png.h")
+-            if [ -n "$PNGH" ]; then
+-                PNGH_STRING=$(pngh_string "$PNGH")
+-                PNGH_MAJMIN=$(pngh_majmin "$PNGH")
+-                if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
+-                    LIBPNGSO=$(find_f "${DIR[1]}" "libpng${PNGH_MAJMIN}.$SOLIBSUFFIX*")
+-                    if [ -n "$LIBPNGSO" ]; then
+-                        cflags "-I${PNGH%/*}"
+-                        lflags "-L${LIBPNGSO%/*} -lpng${PNGH_MAJMIN}"
+-                        status "libpng" "shared (${PNGH_STRING})"
+-                        HAS_LIBPNG=1
+-                        break
+-                    fi
+-                fi
+-            fi
+-        done
+-    fi
+-fi
+-if [ "$HAS_LIBPNG" -eq 0 ]; then
 -    if [[ "$OSTYPE" =~ "darwin" ]]; then
 -        LIBPNG_CMD='`brew install libpng`'
 -    else
@@ -433,10 +487,10 @@ index 1695693..49e92d0 100755
 +./configure.bash $@
 diff --git a/configure.bash b/configure.bash
 new file mode 100755
-index 0000000..1695693
+index 0000000..7308b9d
 --- /dev/null
 +++ b/configure.bash
-@@ -0,0 +1,415 @@
+@@ -0,0 +1,469 @@
 +#!/usr/bin/env bash
 +
 +CONFIG="config.mk"
@@ -454,7 +508,6 @@ index 0000000..1695693
 +    COCOA_READER=0
 +    LCMS2=auto
 +fi
-+LDFLAGS="-lpng -static-libgcc -static"
 +EXTRA_CFLAGS=
 +EXTRA_LDFLAGS=
 +
@@ -585,7 +638,7 @@ index 0000000..1695693
 +}
 +
 +find_pkgconfig() {
-+    LIBNAME=$1
++    local LIBNAME=$1
 +    if pkg-config --exists "$LIBNAME" &> /dev/null; then
 +        cflags "$(pkg-config --cflags "$LIBNAME")"
 +        lflags "$(pkg-config --libs "$LIBNAME")"
@@ -596,13 +649,13 @@ index 0000000..1695693
 +}
 +
 +find_static() {
-+    LIBNAME=$1
-+    HEADERPATTERN=$2
-+    STATICPATTERN=$3
++    local LIBNAME=$1
++    local HEADERPATTERN=$2
++    local STATICPATTERN=$3
 +
-+    HPATH=$(find_h . "$HEADERPATTERN")
++    local HPATH=$(find_h . "$HEADERPATTERN")
 +    if [ -n "$HPATH" ]; then
-+        APATH=$(find_f . "$STATICPATTERN")
++        local APATH=$(find_f . "$STATICPATTERN")
 +        if [ -n "$APATH" ]; then
 +            cflags "-I${HPATH%/*}"
 +            lflags "${APATH}"
@@ -613,12 +666,32 @@ index 0000000..1695693
 +    return 1
 +}
 +
++find_dynamic() {
++    local LIBNAME=$1
++    local HEADERPATTERN=$2
++    local DYNAMICPATTERN=$3
++    local HEADERDIR=$4
++    local LIBDIR=$5
++
++    local HPATH=$(find_h "$HEADERDIR" "$HEADERPATTERN")
++    if [ -n "$HPATH" ]; then
++        local SOPATH=$(find_f "$LIBDIR" "$DYNAMICPATTERN")
++        if [ -n "$SOPATH" ]; then
++            cflags "-I${HPATH%/*}"
++            lflags "-L${SOPATH%/*} -l$DYNAMICLIBNAME"
++            status "$LIBNAME" "shared ... $SOPATH"
++            return 0
++        fi
++    fi
++    return 1
++}
++
 +find_library() {
-+    LIBNAME=$1
-+    DYNAMICLIBNAME=$2
-+    HEADERPATTERN=$3
-+    STATICPATTERN=$4
-+    DYNAMICPATTERN=$5
++    local LIBNAME=$1
++    local DYNAMICLIBNAME=$2
++    local HEADERPATTERN=$3
++    local STATICPATTERN=$4
++    local DYNAMICPATTERN=$5
 +
 +    # try static in current directory first
 +    if find_static "$LIBNAME" "$HEADERPATTERN" "$STATICPATTERN"; then
@@ -632,15 +705,8 @@ index 0000000..1695693
 +
 +    for i in "${DIRS[@]}"; do
 +        DIR=($i)
-+        HPATH=$(find_h "${DIR[0]}" "$HEADERPATTERN")
-+        if [ -n "$HPATH" ]; then
-+            SOPATH=$(find_f "${DIR[1]}" "$DYNAMICPATTERN")
-+            if [ -n "$SOPATH" ]; then
-+                cflags "-I${HPATH%/*}"
-+                lflags "-L${SOPATH%/*} -l$DYNAMICLIBNAME"
-+                status "$LIBNAME" "shared ... $SOPATH"
-+                return 0
-+            fi
++        if find_dynamic "$LIBNAME" "$HEADERPATTERN" "$DYNAMICPATTERN" "${DIR[0]}" "${DIR[1]}"; then
++            return 0
 +        fi
 +    done
 +    return 1
@@ -773,16 +839,58 @@ index 0000000..1695693
 +
 +# libpng
 +# try if given flags are enough
-+SUCCESS=0
++HAS_LIBPNG=0
 +if echo "#include \"png.h\"
 +    int main(){
 +    return !png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-+}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - ; then
++}" | "$CC" -xc -std=c99 -o /dev/null $CFLAGS $LDFLAGS - &> /dev/null; then
 +    status "libpng" "custom flags"
-+    SUCCESS=1
++    HAS_LIBPNG=1
 +fi
 +
-+if [ "$SUCCESS" -eq 0 ]; then
++if [ "$HAS_LIBPNG" -eq 0 ]; then
++    # try static in the given directory
++    PNGH=$(find_h "$LIBPNG_DIR" "png.h")
++    if [ -n "$PNGH" ]; then
++        PNGH_STRING=$(pngh_string "$PNGH")
++        PNGH_MAJMIN=$(pngh_majmin "$PNGH")
++        if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
++            LIBPNGA=$(find_f "$LIBPNG_DIR" "libpng${PNGH_MAJMIN}.a")
++            if [ -n "$LIBPNGA" ]; then
++                cflags "-I${PNGH%/*}"
++                lflags "${LIBPNGA}"
++                status "libpng" "static (${PNGH_STRING})"
++                HAS_LIBPNG=1
++            fi
++        fi
++    fi
++fi
++# try shared
++if [ "$HAS_LIBPNG" -eq 0 ]; then
++    if find_pkgconfig libpng; then
++        HAS_LIBPNG=1
++    else
++        for i in "${DIRS[@]}"; do
++            DIR=($i)
++            PNGH=$(find_h "${DIR[0]}" "png.h")
++            if [ -n "$PNGH" ]; then
++                PNGH_STRING=$(pngh_string "$PNGH")
++                PNGH_MAJMIN=$(pngh_majmin "$PNGH")
++                if [[ -n "$PNGH_STRING" && -n "$PNGH_MAJMIN" ]]; then
++                    LIBPNGSO=$(find_f "${DIR[1]}" "libpng${PNGH_MAJMIN}.$SOLIBSUFFIX*")
++                    if [ -n "$LIBPNGSO" ]; then
++                        cflags "-I${PNGH%/*}"
++                        lflags "-L${LIBPNGSO%/*} -lpng${PNGH_MAJMIN}"
++                        status "libpng" "shared (${PNGH_STRING})"
++                        HAS_LIBPNG=1
++                        break
++                    fi
++                fi
++            fi
++        done
++    fi
++fi
++if [ "$HAS_LIBPNG" -eq 0 ]; then
 +    if [[ "$OSTYPE" =~ "darwin" ]]; then
 +        LIBPNG_CMD='`brew install libpng`'
 +    else

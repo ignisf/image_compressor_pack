@@ -39,15 +39,18 @@ optipng:
   configure_options: ['-with-system-libs', 'LDFLAGS=-static']
   patch_files:
     - 0001-Allow-passing-LDFLAGS-as-configure-arg.patch
-# pngquant:
-#   version: 2.7.1
-#   files:
-#     - :url: https://pngquant.org/pngquant-2.7.1-src.tar.gz
-#       :sha1: a14f66a5b85bf65f432ce16bf029bee344a5d915
-#   patch_files:
-#     - 0001-Add-default-LDFLAGS.patch
-#     - 0002-Work-around-mini-portile-configure-invocation.patch
-#   configure_options: []
+pngquant:
+  version: 2.7.1
+  files:
+    - :url: https://pngquant.org/pngquant-2.7.1-src.tar.gz
+      :sha1: a14f66a5b85bf65f432ce16bf029bee344a5d915
+  patch_files:
+    - 0001-Work-around-mini-portile-s-configure-invocation.patch
+    - 0002-Add-default-LDFLAGS.patch
+    - 0003-Disable-libpng-check.patch
+    - 0004-Remove-libz-check.patch
+    - 0005-Remove-lcms2-check.patch
+  configure_options: ['--extra-ldflags=-lpng']
 advancecomp:
   version: 1.20
   files:
