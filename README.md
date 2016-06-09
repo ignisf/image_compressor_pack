@@ -7,10 +7,6 @@ compilation from source.
 
 ## Installation
 
-Install `nasm`, and the respective development packages of `libpng` and
-`libjpeg`. On Debian-based distros they're called `libpng-dev` and
-`libjpeg-dev`.
-
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -25,6 +21,22 @@ And then execute:
 
 For use in Rails with `image_optim`. Just adding it to your `Gemfile` should be
 enough to add most of the utilities `image_optim` has workers for to the `PATH`.
+
+At this point `image_optim_pack` supports `svgo` and `pngout` which are not
+included in `crunch`. `svgo` requires nodejs and `pngout`'s source is not open.
+
+To exclude them, use the following in your Rails environment configuration or
+appropriate initialiser:
+
+```ruby
+config.assets.image_optim = {skip_missing_workers: true,
+                             svgo: false,
+                             pngout: false}
+```
+
+See https://github.com/toy/image_optim#from-rails for more info on Rails
+configuration or https://github.com/toy/image_optim#configuration if you are
+using `image_optim` and `crunch` outside of Rails.
 
 ## License
 
