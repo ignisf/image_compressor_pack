@@ -1,0 +1,29 @@
+From 57d70d389a60669f85892d01e6850b8472e4025b Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 03:42:26 +0300
+Subject: [PATCH] Produce static binaries
+
+---
+ Makefile.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 4a5b3b0..8870a78 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -104,10 +104,10 @@ NDISASM = ndisasm.$(O) disasm.$(O) sync.$(O) nasmlib.$(O) ver.$(O) \
+ all: nasm$(X) ndisasm$(X) rdf
+ 
+ nasm$(X): $(NASM) $(XOBJS)
+-	$(CC) $(LDFLAGS) -o nasm$(X) $(NASM) $(XOBJS) $(LIBS)
++	$(CC) $(LDFLAGS) -o nasm$(X) $(NASM) $(XOBJS) $(LIBS) -static
+ 
+ ndisasm$(X): $(NDISASM) $(XOBJS)
+-	$(CC) $(LDFLAGS) -o ndisasm$(X) $(NDISASM) $(XOBJS) $(LIBS)
++	$(CC) $(LDFLAGS) -o ndisasm$(X) $(NDISASM) $(XOBJS) $(LIBS) -static
+ 
+ # These source files are automagically generated from a single
+ # instruction-table file by a Perl script. They're distributed,
+-- 
+2.8.3
+
