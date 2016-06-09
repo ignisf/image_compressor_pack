@@ -1,4 +1,4 @@
-require 'mkmf'
+require 'fileutils'
 require_relative '../../lib/crunch/recipes'
 
 root = File.expand_path("../../../", __FILE__)
@@ -22,5 +22,9 @@ File.open(File.join(root, 'lib', '.paths.yml'), 'w') do |f|
   f.puts relative_paths.to_yaml
 end
 
-create_makefile('crunch/crunch')
-exit
+source_makefile = File.join(root, 'Makefile')
+destination_makefile = 'Makefile'
+
+unless File.exist?(destination_makefile) and File.identical?(source_makefile, destination_makefile)
+  FileUtils.cp(File.join(root, 'Makefile'), 'Makefile')
+end
