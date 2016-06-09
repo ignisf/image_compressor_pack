@@ -1,7 +1,7 @@
-From eaa6ffd9898b5edefc9b6ef589b7eeb292c3cb2e Mon Sep 17 00:00:00 2001
+From 0c7f0a525295ec597393d31d13b6604247a96337 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:28:37 +0200
-Subject: [PATCH 4/4] Make the makefile install to the proper location
+Subject: [PATCH 4/5] Make the makefile install to the proper location
 
 ---
  makefile | 3 ++-
@@ -19,5 +19,5 @@ index 40c67d2..8201b3d 100644
 +	mkdir -p ${DESTDIR}/bin/
 +	cp jhead ${DESTDIR}/bin/
 -- 
-2.6.2
+2.8.3
 

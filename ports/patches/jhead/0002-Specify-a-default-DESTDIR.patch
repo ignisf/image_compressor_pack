@@ -1,7 +1,7 @@
-From 800a9432b1dd2f34425ee2bce3578b6d4baeda0f Mon Sep 17 00:00:00 2001
+From 9185d3dcab8243ffdd7bf7ee7f57c76f7fbeba4d Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 17:41:05 +0200
-Subject: [PATCH 2/4] Specify a default DESTDIR
+Subject: [PATCH 2/5] Specify a default DESTDIR
 
 ---
  makefile | 3 ++-
@@ -26,5 +26,5 @@ index 2197f6c..40c67d2 100644
  $(OBJ)/%.o:$(SRC)/%.c
  	${CC} $(CFLAGS) -c $< -o $@
 -- 
-2.6.2
+2.8.3
 

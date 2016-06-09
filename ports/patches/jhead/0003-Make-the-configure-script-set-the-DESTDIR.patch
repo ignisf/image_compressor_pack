@@ -1,7 +1,7 @@
-From 99c84e66b7aca6fffa933907d68421c00e50dc78 Mon Sep 17 00:00:00 2001
+From 97a911d5108da1a76c89d6942b7d55600ef35662 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 17:57:21 +0200
-Subject: [PATCH 3/4] Make the configure script set the DESTDIR
+Subject: [PATCH 3/5] Make the configure script set the DESTDIR
 
 ---
  configure | 21 +++++++++++++++++++++
@@ -35,5 +35,5 @@ index 1a24852..222a540 100755
 +    esac
 +done
 -- 
-2.6.2
+2.8.3
 

@@ -3,7 +3,9 @@ require 'crunch/version'
 
 module Crunch
   def self.paths
-    YAML.load_file File.expand_path('../.paths.yml', __FILE__)
+    root = File.expand_path("../../", __FILE__)
+    relative_paths = YAML.load_file File.expand_path('../.paths.yml', __FILE__)
+    relative_paths.map { |path| File.join root, path }
   end
 
   def self.activate

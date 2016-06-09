@@ -1,0 +1,25 @@
+From afef67e30aff76fba9f852012691687098c1ffbd Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 02:03:46 +0300
+Subject: [PATCH 3/3] Produce a static binary
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 0391a49..c008c3e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -38,7 +38,7 @@ TOOFAR_OK=
+ CFLAGS = -O3 -funroll-loops -fomit-frame-pointer -Wall -Wshadow
+ # [note that -Wall is a gcc-specific compilation flag ("all warnings on")]
+ 
+-LDFLAGS =
++LDFLAGS = -static
+ O = .o
+ E =
+ 
+-- 
+2.8.3
+

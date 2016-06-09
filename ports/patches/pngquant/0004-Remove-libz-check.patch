@@ -1,0 +1,37 @@
+From 0ebf0e9a703606e6a495bb42a43c34e90734b0dd Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 03:07:27 +0300
+Subject: [PATCH 4/6] Remove libz check
+
+---
+ configure.bash | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/configure.bash b/configure.bash
+index 94598bf..0ada8a5 100755
+--- a/configure.bash
++++ b/configure.bash
+@@ -15,7 +15,7 @@ else
+     COCOA_READER=0
+     LCMS2=auto
+ fi
+-LDFLAGS="-lpng -static"
++LDFLAGS="-lpng -lz -static"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+@@ -359,11 +359,6 @@ if [ "$HAS_LIBPNG" -eq 0 ]; then
+     error "libpng" "not found (try: $LIBPNG_CMD)"
+ fi
+ 
+-# zlib
+-if ! find_library "zlib" "z" "zlib.h" "libz.a" "libz.$SOLIBSUFFIX*"; then
+-    error "zlib" "not found (please install zlib-devel package)"
+-fi
+-
+ # lcms2
+ if [ "$LCMS2" != 0 ]; then
+     if find_library "lcms2" "lcms2" "lcms2.h" "liblcms2.a" "liblcms2.$SOLIBSUFFIX*"; then
+-- 
+2.8.3
+
