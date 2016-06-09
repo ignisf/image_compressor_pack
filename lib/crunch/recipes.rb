@@ -1,9 +1,26 @@
 require 'mini_portile2'
 require 'yaml'
+require 'rubygems'
 
 module Crunch
   def self.recipes
-    recipes = YAML.load_file(File.expand_path('../recipes.yml', __FILE__))
+    unless Gem::Platform.local.os =~ /darwin/
+      statically_linked_recipes
+    else
+      dynamically_linked_recipes
+    end
+  end
+
+  def self.statically_linked_recipes
+    parse_recipes File.expand_path('../statically_linked_recipes.yml', __FILE__)
+  end
+
+  def self.dynamically_linked_recipes
+    parse_recipes File.expand_path('../dynamically_linked_recipes.yml', __FILE__)
+  end
+
+  def self.parse_recipes(file)
+    recipes = YAML.load_file(file)
 
     recipes.map do |name, parameters|
       MiniPortile.new(name, parameters['version']).tap do |recipe|

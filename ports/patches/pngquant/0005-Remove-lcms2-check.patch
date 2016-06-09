@@ -1,7 +1,7 @@
 From 28212c119b915202ae3f53f77bd28b68ad481458 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 03:11:07 +0300
-Subject: [PATCH 5/5] Remove lcms2 check
+Subject: [PATCH 5/6] Remove lcms2 check
 
 ---
  configure.bash | 17 ++---------------

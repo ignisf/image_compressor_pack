@@ -1,7 +1,7 @@
 From 0ebf0e9a703606e6a495bb42a43c34e90734b0dd Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 03:07:27 +0300
-Subject: [PATCH 4/5] Remove libz check
+Subject: [PATCH 4/6] Remove libz check
 
 ---
  configure.bash | 7 +------

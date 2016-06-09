@@ -1,0 +1,25 @@
+From f9bd64476161112ed1fb8d76e6069b23c0219ab8 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Thu, 9 Jun 2016 04:45:34 +0300
+Subject: [PATCH 6/6] Do not build static binary
+
+---
+ configure.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.bash b/configure.bash
+index 4b8c80e..25c0e90 100755
+--- a/configure.bash
++++ b/configure.bash
+@@ -15,7 +15,7 @@ else
+     COCOA_READER=0
+     LCMS2=auto
+ fi
+-LDFLAGS="-lpng -lz -llcms2 -lpthread -static"
++LDFLAGS="-lpng -lz -llcms2 -lpthread"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+-- 
+2.8.3
+
