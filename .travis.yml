@@ -6,9 +6,15 @@ matrix:
     - rvm: 2.2
       os: osx
       osx_image: xcode7.3
+    - rvm: jruby-9.0.1.0
+      os: osx
+      before_install: 'sudo gem install bundler'
+      osx_image: xcode7.3
     - rvm: 2.3.1
       dist: trusty
       sudo: true
+    - rvm: jruby-9.0.5.0
+      jdk: oraclejdk8
 script:
   - bundle exec rake compile
 cache: bundler
