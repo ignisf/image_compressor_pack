@@ -1,7 +1,9 @@
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
+require 'crunch/recipes'
 
+desc 'Compile all recipes'
 task :compile do
-  sh "ruby ext/crunch/extconf.rb"
+  sh 'ruby ext/crunch/extconf.rb'
 end
 
 module Helpers
@@ -18,8 +20,8 @@ module Helpers
   end
 end
 
-desc "build a binary gem #{Helpers.binary_gem_name}"
-task :binary => :compile do
+desc "Build #{Helpers.binary_gem_name} into the pkg directory"
+task binary: :compile do
   gemspec = Helpers.binary_gemspec
   gemspec.extensions.clear
 
@@ -40,10 +42,15 @@ task :binary => :compile do
   FileUtils.mv package, 'pkg'
 end
 
-desc "clean up artifacts of the build"
 task :clean do
-  sh "git clean -dxf -e .bundle -e vendor/bundle"
+  sh 'git clean -dxf -e .bundle -e vendor/bundle'
 end
 
-task :default => [:compile]
-task :build => [:clean]
+desc 'Download all recipe archives'
+task :download do
+  Crunch.recipes.each(&:download)
+end
+
+task build: [:clean, :download]
+
+task default: [:compile]
