@@ -1,3 +1,3 @@
 module ImageCompressorPack
-  VERSION = "0.1.1.rc1"
+  VERSION = "0.1.1.rc2"
 end
