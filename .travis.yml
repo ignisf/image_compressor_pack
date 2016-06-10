@@ -15,5 +15,5 @@ matrix:
 script:
   - bundle exec rake build
   - gem install pkg/*.gem
-  - cd spec; rspec --default-path . -I . -O ../.rspec
+  - cd spec; bundle exec rspec --default-path . -I . -O ../.rspec; cd ..
 cache: bundler
