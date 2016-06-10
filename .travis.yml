@@ -6,16 +6,34 @@ matrix:
     - rvm: 2.2
       os: osx
       osx_image: xcode7.3
-      env:
-        SUDO: sudo
     - rvm: jruby-9.0.5.0
       jdk: oraclejdk8
     - rvm: 2.3.1
       dist: trusty
       sudo: true
-      script: MAKEFLAGS=-j8 bundle exec rake
-script:
-  - bundle exec rake build
-  - ${SUDO} gem install --no-ri --no-rdoc pkg/*.gem image_optim rspec
-  - TEST_INSTALLED_GEM=yes rspec
-cache: bundler
+    - rvm: 2.2
+      os: osx
+      osx_image: xcode6.4
+    - rvm: system
+      os: osx
+      osx_image: xcode7.3
+    - rvm: 1.9.3
+  allow_failures:
+    - rvm: 1.9.3
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then gem update bundler; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo gem install bundler; fi
+cache:
+  bundler: true
+  directories:
+    - ports/archives
+deploy:
+  provider: releases
+  api_key:
+    secure: lxEv32SRj+E82RJRfmjNDHqjMJqu15sIeAQ283rYxWDkblFiVeZewTNfRqr3/0hgarUaWsr+JK8cuH+YbB5b6LU5sBWCdrmJ8bL9W+Ru803KdGH3J/7S6WaAPUBV0K5PZvz5TKpF8cVkQ2Dz5jpThR8me773yn7iK0nr1Z3Y0ewiFow6JFOODivluRVlQj9HdFMU4ydc/x2aTIGwshlGYyHMS5htqcpA+/dEOrtrNqMCRUPlDcl11HaCZ0uRqD2YjXloIrpBZotjr8pgpJNZ+wvOQxkw9skAmIUjJJ1DEqRkTImqBKou1E6fSc+e6GRYOgmik6AJWCTNpz25pwXiACbIidIRQWLLLTQFJYGnBswE0yO4fdkmeZ8PwQL5SjEWQ4+mL0iGRBx+JrRYpFkCKQH9Lm4UCuKnPxf0/m41odifqW/bNyil4x2H1WKgqS88UR7IhMJAShP0r0X/3duCSrvVe59XnJnKQHjWjqxQYmpkfJ40Y5Wx9Gcp+vYFhceeRF68mE5ZMdZvcxHqlmh7TiIEsPIuqmu49aYF6r+KnsXAIkjiRvdIvNtnpMTGtoHmyk4bO3cCiI2bd29BPRhgljESl5h3iTpitlGnSJk+ofFZyZDq2bvktR5hC+QaJsExoNlIB0xIA47qXtjPn+UaxlZkM8WqfqVVSSCS4m0teZs=
+  file: "$(git ls-files -o pkg | head -1)"
+  on:
+    repo: ignisf/image_compressor_pack
+    branch: master
+    tags: true
+    condition: $TRAVIS_OS_NAME = osx
