@@ -1,4 +1,4 @@
-From 47cb1f3630f5de102c4d73575d45a71945f04d05 Mon Sep 17 00:00:00 2001
+From eec20eb9b5601caf6edeed9355ac225cecc249d0 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Fri, 10 Jun 2016 11:58:28 +0300
 Subject: [PATCH 1/2] Add a rudimentary configure script
@@ -25,7 +25,7 @@ index aff7587..2b3c6b6 100644
  
 diff --git a/configure b/configure
 new file mode 100755
-index 0000000..a6c4a45
+index 0000000..fc92e55
 --- /dev/null
 +++ b/configure
 @@ -0,0 +1,56 @@
@@ -84,7 +84,7 @@ index 0000000..a6c4a45
 +    s| *\$||
 +"
 +
-+sed -i "$sed_config" Makefile
++sed -i.bak "$sed_config" Makefile
 -- 
 2.8.3
 

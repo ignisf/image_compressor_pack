@@ -90,5 +90,4 @@ jpeg-archive:
   patch_files:
     - 0001-Add-a-rudimentary-configure-script.patch
     - 0002-Use-our-mozjpeg.patch
-  dynamically_linked:
-    configure_options: []
+  configure_options: []

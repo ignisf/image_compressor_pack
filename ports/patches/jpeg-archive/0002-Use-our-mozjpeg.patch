@@ -1,4 +1,4 @@
-From 701e5ed96a8a72acd033d2ee7a46eb3a623ec695 Mon Sep 17 00:00:00 2001
+From 0a577842fc7f44e8b57c1ba8130761e8759626d5 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Fri, 10 Jun 2016 11:59:33 +0300
 Subject: [PATCH 2/2] Use our mozjpeg
