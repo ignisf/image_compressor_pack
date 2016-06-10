@@ -24,6 +24,7 @@ desc "Build #{Helpers.binary_gem_name} into the pkg directory"
 task binary: :compile do
   gemspec = Helpers.binary_gemspec
   gemspec.extensions.clear
+  gemspec.signing_key = File.expand_path("~/.ssh/gem-private_key.pem")
 
   # We don't need most things for the binary
   gemspec.files  = `git ls-files lib`.split("\n")
