@@ -14,6 +14,6 @@ matrix:
       script: MAKEFLAGS=-j8 bundle exec rake
 script:
   - bundle exec rake build
-  - gem install pkg/*.gem image_optim rspec
+  - gem install --no-ri --no-rdoc pkg/*.gem image_optim rspec
   - TEST_INSTALLED_GEM=yes rspec
 cache: bundler
