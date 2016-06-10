@@ -43,7 +43,7 @@ task binary: :compile do
 end
 
 task :clean do
-  sh 'git clean -dxf -e .bundle -e vendor/bundle'
+  sh 'git clean -dxf -e .bundle -e vendor'
 end
 
 desc 'Download all recipe archives'
