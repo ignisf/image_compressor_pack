@@ -11,6 +11,9 @@ matrix:
     - rvm: 2.3.1
       dist: trusty
       sudo: true
+      script: MAKEFLAGS=-j8 bundle exec rake
 script:
-  - MAKEFLAGS=-j8 bundle exec rake
+  - bundle exec rake build
+  - gem install pkg/*.gem
+  - cd spec; rspec --default-path . -I . -O ../.rspec
 cache: bundler
