@@ -15,5 +15,6 @@ matrix:
 script:
   - bundle exec rake build
   - gem install pkg/*.gem
-  - cd spec; bundle exec rspec --default-path . -I . -O ../.rspec; cd ..
+  - cp `gem open -e echo image_compressor_pack`/lib/.paths.yml lib/
+  - bundle exec rake spec
 cache: bundler
