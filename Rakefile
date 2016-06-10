@@ -51,6 +51,12 @@ task :download do
   ImageCompressorPack.recipes.each(&:download)
 end
 
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+end
+
 task build: [:clean, :download]
 
-task default: [:compile]
+task default: [:compile, :spec]
