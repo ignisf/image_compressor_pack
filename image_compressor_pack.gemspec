@@ -21,10 +21,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.extensions    = ["ext/image_compressor_pack/extconf.rb"]
 
-  spec.add_runtime_dependency "mini_portile2", "~> 2.0"
+  spec.add_runtime_dependency "mini_portile2", "~> 2"
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", "~> 1"
+  spec.add_development_dependency "rake", "~> 11"
   spec.add_development_dependency 'image_optim', '~> 0'
   spec.add_development_dependency 'rspec', '~> 3'
 end
