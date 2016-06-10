@@ -6,6 +6,8 @@ matrix:
     - rvm: 2.2
       os: osx
       osx_image: xcode7.3
+      env:
+        SUDO: sudo
     - rvm: jruby-9.0.5.0
       jdk: oraclejdk8
     - rvm: 2.3.1
@@ -14,6 +16,6 @@ matrix:
       script: MAKEFLAGS=-j8 bundle exec rake
 script:
   - bundle exec rake build
-  - gem install --no-ri --no-rdoc pkg/*.gem image_optim rspec
+  - ${SUDO} gem install --no-ri --no-rdoc pkg/*.gem image_optim rspec
   - TEST_INSTALLED_GEM=yes rspec
 cache: bundler
