@@ -36,8 +36,8 @@ optipng:
 pngquant:
   version: 2.7.1
   files:
-    - :url: https://pngquant.org/pngquant-2.7.1-src.tar.gz
-      :sha1: a14f66a5b85bf65f432ce16bf029bee344a5d915
+    - :url: https://github.com/pornel/pngquant/archive/2.7.1.tar.gz
+      :sha256: e8645bea07ef255c102f053d3566ac00e64005aa0e68a2c9f00bc39e575f1dfd
   patch_files:
     - 0001-Work-around-mini-portile-s-configure-invocation.patch
     - 0002-Add-default-LDFLAGS.patch
