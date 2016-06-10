@@ -1,0 +1,46 @@
+From 701e5ed96a8a72acd033d2ee7a46eb3a623ec695 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Fri, 10 Jun 2016 11:59:33 +0300
+Subject: [PATCH 2/2] Use our mozjpeg
+
+---
+ Makefile | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2b3c6b6..2cde65a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -10,28 +10,7 @@ LDFLAGS += $(CONFIGURE_LDFLAGS)
+ UNAME_S := $(shell uname -s)
+ UNAME_M := $(shell uname -m)
+ 
+-ifeq ($(UNAME_S),Linux)
+-	# Linux (e.g. Ubuntu)
+-	MOZJPEG_PREFIX ?= /opt/mozjpeg
+-	CFLAGS += -I$(MOZJPEG_PREFIX)/include
+-	ifeq ($(UNAME_M),x86_64)
+-		LIBJPEG = $(MOZJPEG_PREFIX)/lib64/libjpeg.a
+-	else
+-		LIBJPEG = $(MOZJPEG_PREFIX)/lib/libjpeg.a
+-	endif
+-else
+-	ifeq ($(UNAME_S),Darwin)
+-		# Mac OS X
+-		MOZJPEG_PREFIX ?= /usr/local/opt/mozjpeg
+-		LIBJPEG = $(MOZJPEG_PREFIX)/lib/libjpeg.a
+-		CFLAGS += -I$(MOZJPEG_PREFIX)/include
+-	else
+-		# Windows
+-		LIBJPEG = ../mozjpeg/libjpeg.a
+-		CFLAGS += -I../mozjpeg
+-		MAKE = mingw32-make
+-	endif
+-endif
++LIBJPEG = -ljpeg
+ 
+ LIBIQA=src/iqa/build/release/libiqa.a
+ 
+-- 
+2.8.3
+

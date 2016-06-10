@@ -82,3 +82,13 @@ jpegoptim:
       :sha256: 233d4ae09273cb977e162671f4767be7ef5d96e8c1888d3ed4aa70c4dac1a34c
   patch_files:
     - 0001-Link-lm-after-ljpeg.patch
+jpeg-archive:
+  version: 2.1.1
+  files:
+    - :url: https://github.com/danielgtaylor/jpeg-archive/archive/2.1.1.tar.gz
+      :sha256: 494534f5308f99743f11f3a7c151a8d5ca8a5f1f8b61ea119098511d401bc618
+  patch_files:
+    - 0001-Add-a-rudimentary-configure-script.patch
+    - 0002-Use-our-mozjpeg.patch
+  dynamically_linked:
+    configure_options: []

@@ -1,0 +1,90 @@
+From 47cb1f3630f5de102c4d73575d45a71945f04d05 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Fri, 10 Jun 2016 11:58:28 +0300
+Subject: [PATCH 1/2] Add a rudimentary configure script
+
+---
+ Makefile  |  3 +++
+ configure | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
+ create mode 100755 configure
+
+diff --git a/Makefile b/Makefile
+index aff7587..2b3c6b6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,6 +4,9 @@ LDFLAGS += -lm
+ MAKE ?= make
+ PREFIX ?= /usr/local
+ 
++CONFIGURE_LDFLAGS =
++LDFLAGS += $(CONFIGURE_LDFLAGS)
++
+ UNAME_S := $(shell uname -s)
+ UNAME_M := $(shell uname -m)
+ 
+diff --git a/configure b/configure
+new file mode 100755
+index 0000000..a6c4a45
+--- /dev/null
++++ b/configure
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++ldflags=""
++
++for arg in "$@"
++do
++    case "$arg" in
++    -- )
++        option="$arg"
++        ;;
++    * )
++        option="$arg"
++        ;;
++    esac
++    case "$arg" in
++    *=* )
++        optarg=`expr "X$arg" : 'X[^=]*=\(.*\)'`
++        ;;
++    * )
++        optarg=""
++        ;;
++    esac
++    case "$option" in
++    --help | -h )
++        echo "Usage:"
++        echo "    $0 [options]"
++        echo "Options:"
++        echo "    -h, --help              Show this help"
++        echo "    --ldflags=LDFLAGS       Pass these flags to ld"
++        echo "                            [default: none]"
++        echo "    --prefix=PREFIX         Install in the specified prefix"
++        echo "                            [default: /usr/local]"
++        exit 0
++        ;;
++    --ldflags=* )
++        ldflags="$optarg"
++        shift
++        ;;
++    --prefix=* )
++        prefix="$optarg"
++        shift
++        ;;
++    * )
++        echo "$0: warning: unknown option: $arg"
++        echo "Type \"$0 -help\" for help"
++        ;;
++    esac
++done
++
++sed_config="
++    s|PREFIX ?=.*|PREFIX ?= $prefix|g
++    s|CONFIGURE_LDFLAGS =.*|CONFIGURE_LDFLAGS = $ldflags|g
++    s| *\$||
++"
++
++sed -i "$sed_config" Makefile
+-- 
+2.8.3
+
