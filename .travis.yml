@@ -14,7 +14,6 @@ matrix:
       script: MAKEFLAGS=-j8 bundle exec rake
 script:
   - bundle exec rake build
-  - gem install pkg/*.gem
-  - cp `gem open -e echo image_compressor_pack`/lib/.paths.yml lib/
-  - bundle exec rake spec
+  - gem install pkg/*.gem rspec
+  - TEST_INSTALLED_GEM=yes rspec
 cache: bundler

@@ -1,3 +1,9 @@
+unless ENV['TEST_INSTALLED_GEM'].to_s.empty?
+  $LOAD_PATH.delete_if { |p| File.expand_path(p) == File.expand_path("./lib") }
+end
+
+puts $LOAD_PATH
+
 require 'image_compressor_pack'
 
 RSpec.configure do |c|
