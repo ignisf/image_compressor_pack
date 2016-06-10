@@ -43,7 +43,7 @@ task binary: :compile do
 end
 
 task :clean do
-  sh 'git clean -dxf -e .bundle -e vendor'
+  sh 'git clean -dxf -e .bundle -e vendor -e Gemfile.lock'
 end
 
 desc 'Download all recipe archives'
