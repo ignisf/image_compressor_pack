@@ -1,7 +1,7 @@
 From 9a12984ba0dde61da211a023c84c04a06a5219e6 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 01:28:09 +0300
-Subject: [PATCH] Build static binaries
+Subject: [PATCH 1/2] Build static binaries
 
 ---
  Makefile.am | 1 +

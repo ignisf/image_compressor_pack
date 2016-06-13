@@ -1,0 +1,332 @@
+From 588337f6e288b1ba42de8262517cc58b81d38c71 Mon Sep 17 00:00:00 2001
+From: Chandler Carruth <chandlerc@gmail.com>
+Date: Tue, 15 Sep 2015 11:57:03 -0700
+Subject: [PATCH 2/2] Fix x86-64 ABI conformance issue in SIMD code
+ (descriptions cribbed by DRC from discussion in #20) In the x86-64 ABI, the
+ high (unused) DWORD of a 32-bit argument's register is undefined, so it was
+ incorrect to use a 64-bit mov instruction to transfer a JDIMENSION argument
+ in the 64-bit SSE2 SIMD functions. The code worked thus far only because the
+ existing compiler optimizers weren't smart enough to do anything else with
+ the register in question, so the upper 32 bits happened to be all zeroes--
+ for the past 6 years, on every x86-64 compiler previously known to mankind.
+
+The bleeding-edge Clang/LLVM compiler has a smarter optimizer, and
+under certain circumstances, it will attempt to load-combine adjacent
+32-bit integers from one of the libjpeg structures into a single 64-bit
+integer and pass that 64-bit integer as a 32-bit argument to one of the
+SIMD functions (which is allowed by the ABI, since the upper 32 bits of
+the 32-bit argument's register are undefined.)  This caused the
+libjpeg-turbo regression tests to crash.
+
+Also enhance the documentation of JDIMENSION to explain that its size
+is significant to the implementation of the SIMD code.
+
+Closes #20.  Refer also to http://crbug.com/532214.
+---
+ jmorecfg.h                |  4 +++-
+ simd/jccolext-sse2-64.asm |  4 ++--
+ simd/jcgryext-sse2-64.asm |  4 ++--
+ simd/jcsample-sse2-64.asm | 12 ++++++------
+ simd/jdcolext-sse2-64.asm |  4 ++--
+ simd/jdmrgext-sse2-64.asm |  8 ++++----
+ simd/jdsample-sse2-64.asm |  8 ++++----
+ simd/jidctflt-sse2-64.asm |  2 +-
+ simd/jidctfst-sse2-64.asm |  2 +-
+ simd/jidctint-sse2-64.asm |  2 +-
+ simd/jidctred-sse2-64.asm |  4 ++--
+ simd/jquantf-sse2-64.asm  |  2 +-
+ simd/jquanti-sse2-64.asm  |  2 +-
+ 13 files changed, 30 insertions(+), 28 deletions(-)
+
+diff --git a/jmorecfg.h b/jmorecfg.h
+index 108e7de..d9c35de 100644
+--- a/jmorecfg.h
++++ b/jmorecfg.h
+@@ -155,7 +155,9 @@ typedef long INT32;
+  * images up to 64K*64K due to 16-bit fields in SOF markers.  Therefore
+  * "unsigned int" is sufficient on all machines.  However, if you need to
+  * handle larger images and you don't mind deviating from the spec, you
+- * can change this datatype.
++ * can change this datatype.  (Note that changing this datatype will
++ * potentially require modifying the SIMD code.  The x86-64 SIMD extensions,
++ * in particular, assume a 32-bit JDIMENSION.)
+  */
+ 
+ typedef unsigned int JDIMENSION;
+diff --git a/simd/jccolext-sse2-64.asm b/simd/jccolext-sse2-64.asm
+index 7bd6d01..7ad4343 100644
+--- a/simd/jccolext-sse2-64.asm
++++ b/simd/jccolext-sse2-64.asm
+@@ -50,14 +50,14 @@ EXTN(jsimd_rgb_ycc_convert_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rcx, r10
++        mov     ecx, r10d
+         test    rcx,rcx
+         jz      near .return
+ 
+         push    rcx
+ 
+         mov rsi, r12
+-        mov rcx, r13
++        mov ecx, r13d
+         mov     rdi, JSAMPARRAY [rsi+0*SIZEOF_JSAMPARRAY]
+         mov     rbx, JSAMPARRAY [rsi+1*SIZEOF_JSAMPARRAY]
+         mov     rdx, JSAMPARRAY [rsi+2*SIZEOF_JSAMPARRAY]
+diff --git a/simd/jcgryext-sse2-64.asm b/simd/jcgryext-sse2-64.asm
+index 5af02e0..82c0fc8 100644
+--- a/simd/jcgryext-sse2-64.asm
++++ b/simd/jcgryext-sse2-64.asm
+@@ -50,14 +50,14 @@ EXTN(jsimd_rgb_gray_convert_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rcx, r10
++        mov     ecx, r10d
+         test    rcx,rcx
+         jz      near .return
+ 
+         push    rcx
+ 
+         mov rsi, r12
+-        mov rcx, r13
++        mov ecx, r13d
+         mov     rdi, JSAMPARRAY [rsi+0*SIZEOF_JSAMPARRAY]
+         lea     rdi, [rdi+rcx*SIZEOF_JSAMPROW]
+ 
+diff --git a/simd/jcsample-sse2-64.asm b/simd/jcsample-sse2-64.asm
+index f32fb4f..7693285 100644
+--- a/simd/jcsample-sse2-64.asm
++++ b/simd/jcsample-sse2-64.asm
+@@ -49,11 +49,11 @@ EXTN(jsimd_h2v1_downsample_sse2):
+         mov     rbp,rsp
+         collect_args
+ 
+-        mov rcx, r13
++        mov ecx, r13d
+         shl     rcx,3                   ; imul rcx,DCTSIZE (rcx = output_cols)
+         jz      near .return
+ 
+-        mov rdx, r10
++        mov edx, r10d
+ 
+         ; -- expand_right_edge
+ 
+@@ -90,7 +90,7 @@ EXTN(jsimd_h2v1_downsample_sse2):
+ 
+         ; -- h2v1_downsample
+ 
+-        mov     rax, r12        ; rowctr
++        mov     eax, r12d        ; rowctr
+         test    eax,eax
+         jle     near .return
+ 
+@@ -193,11 +193,11 @@ EXTN(jsimd_h2v2_downsample_sse2):
+         mov     rbp,rsp
+         collect_args
+ 
+-        mov     rcx, r13
++        mov     ecx, r13d
+         shl     rcx,3                   ; imul rcx,DCTSIZE (rcx = output_cols)
+         jz      near .return
+ 
+-        mov     rdx, r10
++        mov     edx, r10d
+ 
+         ; -- expand_right_edge
+ 
+@@ -234,7 +234,7 @@ EXTN(jsimd_h2v2_downsample_sse2):
+ 
+         ; -- h2v2_downsample
+ 
+-        mov     rax, r12        ; rowctr
++        mov     eax, r12d        ; rowctr
+         test    rax,rax
+         jle     near .return
+ 
+diff --git a/simd/jdcolext-sse2-64.asm b/simd/jdcolext-sse2-64.asm
+index bfd1f35..d356e65 100644
+--- a/simd/jdcolext-sse2-64.asm
++++ b/simd/jdcolext-sse2-64.asm
+@@ -52,14 +52,14 @@ EXTN(jsimd_ycc_rgb_convert_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rcx, r10        ; num_cols
++        mov     ecx, r10d        ; num_cols
+         test    rcx,rcx
+         jz      near .return
+ 
+         push    rcx
+ 
+         mov     rdi, r11
+-        mov     rcx, r12
++        mov     ecx, r12d
+         mov     rsi, JSAMPARRAY [rdi+0*SIZEOF_JSAMPARRAY]
+         mov     rbx, JSAMPARRAY [rdi+1*SIZEOF_JSAMPARRAY]
+         mov     rdx, JSAMPARRAY [rdi+2*SIZEOF_JSAMPARRAY]
+diff --git a/simd/jdmrgext-sse2-64.asm b/simd/jdmrgext-sse2-64.asm
+index ff127b5..989d7f1 100644
+--- a/simd/jdmrgext-sse2-64.asm
++++ b/simd/jdmrgext-sse2-64.asm
+@@ -52,14 +52,14 @@ EXTN(jsimd_h2v1_merged_upsample_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rcx, r10        ; col
++        mov     ecx, r10d        ; col
+         test    rcx,rcx
+         jz      near .return
+ 
+         push    rcx
+ 
+         mov     rdi, r11
+-        mov     rcx, r12
++        mov     ecx, r12d
+         mov     rsi, JSAMPARRAY [rdi+0*SIZEOF_JSAMPARRAY]
+         mov     rbx, JSAMPARRAY [rdi+1*SIZEOF_JSAMPARRAY]
+         mov     rdx, JSAMPARRAY [rdi+2*SIZEOF_JSAMPARRAY]
+@@ -455,10 +455,10 @@ EXTN(jsimd_h2v2_merged_upsample_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rax, r10
++        mov     eax, r10d
+ 
+         mov     rdi, r11
+-        mov     rcx, r12
++        mov     ecx, r12d
+         mov     rsi, JSAMPARRAY [rdi+0*SIZEOF_JSAMPARRAY]
+         mov     rbx, JSAMPARRAY [rdi+1*SIZEOF_JSAMPARRAY]
+         mov     rdx, JSAMPARRAY [rdi+2*SIZEOF_JSAMPARRAY]
+diff --git a/simd/jdsample-sse2-64.asm b/simd/jdsample-sse2-64.asm
+index 335ce2a..2287c00 100644
+--- a/simd/jdsample-sse2-64.asm
++++ b/simd/jdsample-sse2-64.asm
+@@ -67,7 +67,7 @@ EXTN(jsimd_h2v1_fancy_upsample_sse2):
+         mov     rbp,rsp
+         collect_args
+ 
+-        mov     rax, r11  ; colctr
++        mov     eax, r11d  ; colctr
+         test    rax,rax
+         jz      near .return
+ 
+@@ -214,7 +214,7 @@ EXTN(jsimd_h2v2_fancy_upsample_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rax, r11  ; colctr
++        mov     eax, r11d  ; colctr
+         test    rax,rax
+         jz      near .return
+ 
+@@ -506,7 +506,7 @@ EXTN(jsimd_h2v1_upsample_sse2):
+         mov     rbp,rsp
+         collect_args
+ 
+-        mov     rdx, r11
++        mov     edx, r11d
+         add     rdx, byte (2*SIZEOF_XMMWORD)-1
+         and     rdx, byte -(2*SIZEOF_XMMWORD)
+         jz      near .return
+@@ -596,7 +596,7 @@ EXTN(jsimd_h2v2_upsample_sse2):
+         collect_args
+         push    rbx
+ 
+-        mov     rdx, r11
++        mov     edx, r11d
+         add     rdx, byte (2*SIZEOF_XMMWORD)-1
+         and     rdx, byte -(2*SIZEOF_XMMWORD)
+         jz      near .return
+diff --git a/simd/jidctflt-sse2-64.asm b/simd/jidctflt-sse2-64.asm
+index 32e4ec2..95bd4dc 100644
+--- a/simd/jidctflt-sse2-64.asm
++++ b/simd/jidctflt-sse2-64.asm
+@@ -326,7 +326,7 @@ EXTN(jsimd_idct_float_sse2):
+         mov     rax, [original_rbp]
+         lea     rsi, [workspace]                        ; FAST_FLOAT * wsptr
+         mov     rdi, r12        ; (JSAMPROW *)
+-        mov     rax, r13
++        mov     eax, r13d
+         mov     rcx, DCTSIZE/4                          ; ctr
+ .rowloop:
+ 
+diff --git a/simd/jidctfst-sse2-64.asm b/simd/jidctfst-sse2-64.asm
+index 8566952..d507578 100644
+--- a/simd/jidctfst-sse2-64.asm
++++ b/simd/jidctfst-sse2-64.asm
+@@ -323,7 +323,7 @@ EXTN(jsimd_idct_ifast_sse2):
+ 
+         mov     rax, [original_rbp]
+         mov     rdi, r12        ; (JSAMPROW *)
+-        mov     rax, r13
++        mov     eax, r13d
+ 
+         ; -- Even part
+ 
+diff --git a/simd/jidctint-sse2-64.asm b/simd/jidctint-sse2-64.asm
+index 32bbfd8..1cc3086 100644
+--- a/simd/jidctint-sse2-64.asm
++++ b/simd/jidctint-sse2-64.asm
+@@ -515,7 +515,7 @@ EXTN(jsimd_idct_islow_sse2):
+ 
+         mov     rax, [original_rbp]
+         mov     rdi, r12        ; (JSAMPROW *)
+-        mov     rax, r13
++        mov     eax, r13d
+ 
+         ; -- Even part
+ 
+diff --git a/simd/jidctred-sse2-64.asm b/simd/jidctred-sse2-64.asm
+index dad43d9..02b155a 100644
+--- a/simd/jidctred-sse2-64.asm
++++ b/simd/jidctred-sse2-64.asm
+@@ -312,7 +312,7 @@ EXTN(jsimd_idct_4x4_sse2):
+ 
+         mov     rax, [original_rbp]
+         mov     rdi, r12        ; (JSAMPROW *)
+-        mov     rax, r13
++        mov     eax, r13d
+ 
+         ; -- Even part
+ 
+@@ -521,7 +521,7 @@ EXTN(jsimd_idct_2x2_sse2):
+         ; ---- Pass 2: process rows, store into output array.
+ 
+         mov     rdi, r12        ; (JSAMPROW *)
+-        mov     rax, r13
++        mov     eax, r13d
+ 
+         ; | input:| result:|
+         ; | A0 B0 |        |
+diff --git a/simd/jquantf-sse2-64.asm b/simd/jquantf-sse2-64.asm
+index 20e815f..cf7f0d8 100644
+--- a/simd/jquantf-sse2-64.asm
++++ b/simd/jquantf-sse2-64.asm
+@@ -50,7 +50,7 @@ EXTN(jsimd_convsamp_float_sse2):
+         packsswb xmm7,xmm7              ; xmm7 = PB_CENTERJSAMPLE (0x808080..)
+ 
+         mov rsi, r10
+-        mov     rax, r11
++        mov     eax, r11d
+         mov rdi, r12
+         mov     rcx, DCTSIZE/2
+ .convloop:
+diff --git a/simd/jquanti-sse2-64.asm b/simd/jquanti-sse2-64.asm
+index 50b8dce..b61f4db 100644
+--- a/simd/jquanti-sse2-64.asm
++++ b/simd/jquanti-sse2-64.asm
+@@ -50,7 +50,7 @@ EXTN(jsimd_convsamp_sse2):
+         psllw   xmm7,7                  ; xmm7={0xFF80 0xFF80 0xFF80 0xFF80 ..}
+ 
+         mov rsi, r10
+-        mov rax, r11
++        mov eax, r11d
+         mov rdi, r12
+         mov     rcx, DCTSIZE/4
+ .convloop:
+-- 
+2.8.3
+

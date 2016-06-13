@@ -31,6 +31,7 @@ mozjpeg:
   configure_options: ['--enable-static', '--disable-shared', 'libpng_LIBS=-lpng\ -lz']
   patch_files:
     - 0001-Build-static-binaries.patch
+    - 0002-Fix-x86-64-ABI-conformance-issue-in-SIMD-code-descri.patch
 optipng:
   version: 0.7.6
   files:
