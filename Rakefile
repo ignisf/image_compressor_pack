@@ -68,7 +68,6 @@ namespace :build do
         sh "vagrant up"
         sh "vagrant ssh -c 'rm -rf ~/image_compressor_pack'"
         sh "vagrant ssh -c 'git clone /image_compressor_pack/.git ~/image_compressor_pack'"
-        sh "vagrant ssh -c 'cd ~/image_compressor_pack && git checkout v0.1.1'"
         sh "vagrant ssh -c 'cd ~/image_compressor_pack && bundle install --path vendor/bundle'"
         sh "cat ~/.ssh/gem-private_key.pem | vagrant ssh -c 'cat > ~/.ssh/gem-private_key.pem'"
         sh "vagrant ssh -c 'cd ~/image_compressor_pack && bundle exec rake binary'"
