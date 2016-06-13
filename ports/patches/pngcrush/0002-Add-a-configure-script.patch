@@ -1,7 +1,7 @@
 From f5f4dbab2c81d9a3a6e908f9cc9d8c41c9188a71 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:46:05 +0200
-Subject: [PATCH 2/3] Add a configure script
+Subject: [PATCH 2/4] Add a configure script
 
 ---
  configure | 47 +++++++++++++++++++++++++++++++++++++++++++++++
