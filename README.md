@@ -44,6 +44,12 @@ using `image_optim` and `image_compressor_pack` outside of Rails.
 The packaged utilities are pretty niche and I wouldn't use them on images from
 untrusted parties. Do so on your own responsibility.
 
+The .gem files I produce on trusted systems are signed with the certificate in
+the `certs` directory. There's an OpenPGP signature there, too. It can be used
+to tie the x509 certificate to my OpenPGP web of trust. See
+[this](http://guides.rubygems.org/security/) for more info on verifying gem
+signatures.
+
 ## License
 
 The gem is available as open source under the terms of the
