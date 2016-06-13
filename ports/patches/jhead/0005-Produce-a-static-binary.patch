@@ -1,4 +1,4 @@
-From 93a5ae2d676c5ac6aa7dc1bcf41426050c1e9fe7 Mon Sep 17 00:00:00 2001
+From 548385f303ef319fca7ad714793bb5c0ac81abaa Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 01:59:08 +0300
 Subject: [PATCH 5/5] Produce a static binary

@@ -1,39 +1,64 @@
-From 97a911d5108da1a76c89d6942b7d55600ef35662 Mon Sep 17 00:00:00 2001
+From 28ea2dcad9c0d706099f9466edd453c0220d2a55 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 17:57:21 +0200
 Subject: [PATCH 3/5] Make the configure script set the DESTDIR
 
 ---
- configure | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ configure | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
 diff --git a/configure b/configure
-index 1a24852..222a540 100755
+index 1a24852..b2407ee 100755
 --- a/configure
 +++ b/configure
-@@ -1 +1,22 @@
+@@ -1 +1,47 @@
  #!/bin/sh
 +
-+TEMP=`getopt -o '' --long enable-static,disable-shared,prefix:,host: \
-+     -n 'configure' -- "$@"`
-+
-+if [ $? != 0 ] ; then exit 1 ; fi
-+
-+# Note the quotes around `$TEMP': they are essential!
-+eval set -- "$TEMP"
-+
-+while true ; do
-+    case "$1" in
-+        --host) shift 2 ;;
-+        --enable-static) shift ;;
-+        --disable-shared) shift ;;
-+        --prefix)
-+            dir="$( echo $2 | sed 's_/_\\/_g' )"
-+            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" makefile; shift 2 ;;
-+        --) shift; break ;;
-+        *) echo "Internal error!" ; exit 1 ;;
++for arg in "$@"
++do
++    case "$arg" in
++    -- )
++        option="$arg"
++        ;;
++    * )
++        option="$arg"
++        ;;
++    esac
++    case "$arg" in
++    *=* )
++        optarg=`expr "X$arg" : 'X[^=]*=\(.*\)'`
++        ;;
++    * )
++        optarg=""
++        ;;
++    esac
++    case "$option" in
++    --help | -h )
++        echo "Usage:"
++        echo "    $0 [options]"
++        echo "Options:"
++        echo "    -h, --help              Show this help"
++        echo "    --prefix=PREFIX         Install in the specified prefix"
++        echo "                            [default: /usr/local]"
++        exit 0
++        ;;
++    --prefix=* )
++        prefix="$optarg"
++        shift
++        ;;
++    * )
++        echo "$0: warning: unknown option: $arg"
++        echo "Type \"$0 -help\" for help"
++        ;;
 +    esac
 +done
++
++sed_config="
++    s|DESTDIR=.*|DESTDIR=$prefix|g
++    s| *\$||
++"
++
++sed -i.bak "$sed_config" makefile
 -- 
 2.8.3
 

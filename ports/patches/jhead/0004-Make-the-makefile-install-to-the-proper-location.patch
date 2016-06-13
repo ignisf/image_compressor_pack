@@ -1,4 +1,4 @@
-From 0c7f0a525295ec597393d31d13b6604247a96337 Mon Sep 17 00:00:00 2001
+From b3c348fc8646fd1499fd6b1c6c652a15d819a9dd Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:28:37 +0200
 Subject: [PATCH 4/5] Make the makefile install to the proper location

@@ -1,41 +1,66 @@
-From bf6f5c097a8dd88620dff316df85c3917ba72269 Mon Sep 17 00:00:00 2001
+From f5f4dbab2c81d9a3a6e908f9cc9d8c41c9188a71 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:46:05 +0200
 Subject: [PATCH 2/3] Add a configure script
 
 ---
- configure | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ configure | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
  create mode 100755 configure
 
 diff --git a/configure b/configure
 new file mode 100755
-index 0000000..59a425f
+index 0000000..6af6f2f
 --- /dev/null
 +++ b/configure
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,47 @@
 +#!/bin/sh
 +
-+TEMP=`getopt -o '' --long enable-static,disable-shared,prefix:,host: \
-+     -n 'configure' -- "$@"`
-+
-+if [ $? != 0 ] ; then exit 1 ; fi
-+
-+# Note the quotes around `$TEMP': they are essential!
-+eval set -- "$TEMP"
-+
-+while true ; do
-+    case "$1" in
-+        --host) shift 2 ;;
-+        --enable-static) shift ;;
-+        --disable-shared) shift ;;
-+        --prefix)
-+            dir="$( echo $2 | sed 's_/_\\/_g' )"
-+            sed -i "s/DESTDIR=.*/DESTDIR=${dir}/" Makefile; shift 2 ;;
-+        --) shift ; break ;;
-+        *) echo "Internal error!" ; exit 1 ;;
++for arg in "$@"
++do
++    case "$arg" in
++    -- )
++        option="$arg"
++        ;;
++    * )
++        option="$arg"
++        ;;
++    esac
++    case "$arg" in
++    *=* )
++        optarg=`expr "X$arg" : 'X[^=]*=\(.*\)'`
++        ;;
++    * )
++        optarg=""
++        ;;
++    esac
++    case "$option" in
++    --help | -h )
++        echo "Usage:"
++        echo "    $0 [options]"
++        echo "Options:"
++        echo "    -h, --help              Show this help"
++        echo "    --prefix=PREFIX         Install in the specified prefix"
++        echo "                            [default: /usr/local]"
++        exit 0
++        ;;
++    --prefix=* )
++        prefix="$optarg"
++        shift
++        ;;
++    * )
++        echo "$0: warning: unknown option: $arg"
++        echo "Type \"$0 -help\" for help"
++        ;;
 +    esac
 +done
++
++sed_config="
++    s|DESTDIR=.*|DESTDIR=$prefix|g
++    s| *\$||
++"
++
++sed -i.bak "$sed_config" Makefile
 -- 
 2.8.3
 
