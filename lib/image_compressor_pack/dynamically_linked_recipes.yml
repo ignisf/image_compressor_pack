@@ -29,6 +29,7 @@ mozjpeg:
       :sha256: deedd88342c5da219f0047d9a290cd58eebe1b7a513564fcd8ebc49670077a1f
   patch_files:
     - 0002-Fix-x86-64-ABI-conformance-issue-in-SIMD-code-descri.patch
+  configure_options: ['--enable-static', '--disable-shared', '--with-jpeg8']
 optipng:
   version: 0.7.6
   files:
