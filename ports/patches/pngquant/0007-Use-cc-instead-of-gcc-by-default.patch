@@ -1,0 +1,27 @@
+From 5ff1fc51189b133f243286a66673ec5e008463ea Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Mon, 13 Jun 2016 23:30:46 +0300
+Subject: [PATCH 7/7] Use cc instead of gcc by default
+
+---
+ configure.bash | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.bash b/configure.bash
+index 25c0e90..dddcc1d 100755
+--- a/configure.bash
++++ b/configure.bash
+@@ -19,8 +19,8 @@ LDFLAGS="-lpng -lz -llcms2 -lpthread"
+ EXTRA_CFLAGS=
+ EXTRA_LDFLAGS=
+ 
+-# make gcc default compiler unless CC is already set
+-CC=${CC:-gcc}
++# make cc default compiler unless CC is already set
++CC=${CC:-cc}
+ 
+ help() {
+     printf "%4s %s\n" "" "$1"
+-- 
+2.8.3
+

@@ -51,6 +51,7 @@ pngquant:
     - 0003-Disable-libpng-check.patch
     - 0004-Remove-libz-check.patch
     - 0005-Remove-lcms2-check.patch
+    - 0007-Use-cc-instead-of-gcc-by-default.patch
   configure_options: ['--extra-ldflags=-lpng']
 advancecomp:
   version: 1.20

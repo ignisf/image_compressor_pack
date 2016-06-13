@@ -1,7 +1,7 @@
 From 2a2d11aa8ebd7942e4ff5e03bcdf77dc1a10462b Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 02:51:12 +0300
-Subject: [PATCH 1/6] Work around mini portile's configure invocation
+Subject: [PATCH 1/7] Work around mini portile's configure invocation
 
 ---
  configure      | 471 +--------------------------------------------------------

@@ -47,6 +47,7 @@ pngquant:
     - 0004-Remove-libz-check.patch
     - 0005-Remove-lcms2-check.patch
     - 0006-Do-not-build-static-binary.patch
+    - 0007-Use-cc-instead-of-gcc-by-default.patch
   configure_options: []
 advancecomp:
   version: 1.20
