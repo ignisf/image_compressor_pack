@@ -58,6 +58,27 @@ begin
 rescue LoadError
 end
 
+namespace :build do
+  ['x86_64-linux', 'x86-linux', 'x86_64-freebsd10'].each do |arch|
+    desc "build binary gem for #{arch}"
+    task arch do
+      arch_dir = Pathname(__FILE__).dirname.join("release/#{arch}")
+      Dir.chdir(arch_dir) do
+        ENV['RUBYLIB'] = nil # https://github.com/mitchellh/vagrant/issues/6158
+        sh "vagrant up"
+        sh "vagrant ssh -c 'rm -rf ~/image_compressor_pack'"
+        sh "vagrant ssh -c 'git clone /image_compressor_pack/.git ~/image_compressor_pack'"
+        sh "vagrant ssh -c 'cd ~/image_compressor_pack && git checkout v0.1.1'"
+        sh "vagrant ssh -c 'cd ~/image_compressor_pack && bundle install --path vendor/bundle'"
+        sh "cat ~/.ssh/gem-private_key.pem | vagrant ssh -c 'cat > ~/.ssh/gem-private_key.pem'"
+        sh "vagrant ssh -c 'cd ~/image_compressor_pack && bundle exec rake binary'"
+        sh "vagrant ssh -c 'shred -vzu ~/.ssh/gem-private_key.pem'"
+        sh "vagrant ssh -c 'cp ~/image_compressor_pack/pkg/*.gem /vagrant'"
+      end
+    end
+  end
+end
+
 task build: [:clean, :download]
 
 task default: [:compile, :spec]
