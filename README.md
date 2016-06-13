@@ -39,6 +39,11 @@ See https://github.com/toy/image_optim#from-rails for more info on Rails
 configuration or https://github.com/toy/image_optim#configuration if you are
 using `image_optim` and `image_compressor_pack` outside of Rails.
 
+## Note on the security of this gem
+
+The packaged utilities are pretty niche and I wouldn't use them on images from
+untrusted parties. Do so on your own responsibility.
+
 ## License
 
 The gem is available as open source under the terms of the
