@@ -102,4 +102,5 @@ jpeg-archive:
   patch_files:
     - 0001-Add-a-rudimentary-configure-script.patch
     - 0002-Use-our-mozjpeg.patch
+    - 0003-Use-cc-instead-of-gcc-by-default.patch
   configure_options: ['--ldflags=-static']

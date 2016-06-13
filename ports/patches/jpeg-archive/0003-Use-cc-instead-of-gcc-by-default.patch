@@ -1,0 +1,36 @@
+From 9c5891e0b19451e5f2a244aa2f1ecdca31027095 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Tue, 14 Jun 2016 00:03:54 +0300
+Subject: [PATCH 3/3] Use cc instead of gcc by default
+
+---
+ Makefile         | 2 +-
+ src/iqa/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2cde65a..04d5b10 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,4 @@
+-CC ?= gcc
++CC ?= cc
+ CFLAGS += -std=c99 -Wall -O3
+ LDFLAGS += -lm
+ MAKE ?= make
+diff --git a/src/iqa/Makefile b/src/iqa/Makefile
+index 59be8a3..cbca586 100644
+--- a/src/iqa/Makefile
++++ b/src/iqa/Makefile
+@@ -11,7 +11,7 @@ SRC= \
+ OBJ = $(SRC:.c=.o)
+ 
+ INCLUDES = -I./include
+-CC = gcc
++CC ?= cc
+ 
+ ifeq ($(RELEASE),1)
+ OUTDIR=./build/release
+-- 
+2.8.3
+
