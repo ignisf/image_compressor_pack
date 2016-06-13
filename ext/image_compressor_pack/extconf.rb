@@ -1,6 +1,15 @@
 require 'fileutils'
 require_relative '../../lib/image_compressor_pack/recipes'
 
+if Gem::Platform.local.os =~ /freebsd/
+  unless system 'which gmake 2>&1 > /dev/null'
+    fail "image_compressor_pack requires gmake to be installed"
+  end
+
+  `ln -fs #{`which gmake`.chomp} make`
+  ENV['PATH'] = "#{File.expand_path '.'}:#{ENV['PATH']}"
+end
+
 root = File.expand_path("../../../", __FILE__)
 
 recipes = ImageCompressorPack.recipes
