@@ -72,6 +72,7 @@ namespace :build do
         sh "cat ~/.ssh/gem-private_key.pem | vagrant ssh -c 'cat > ~/.ssh/gem-private_key.pem'"
         sh "vagrant ssh -c 'cd ~/image_compressor_pack && bundle exec rake binary'"
         sh "vagrant ssh -c 'shred -vzu ~/.ssh/gem-private_key.pem'"
+        sh "vagrant ssh -c 'gshred -vzu ~/.ssh/gem-private_key.pem'"
         sh "vagrant ssh -c 'cp ~/image_compressor_pack/pkg/*.gem /vagrant'"
         sh "vagrant destroy"
       end
