@@ -79,7 +79,7 @@ pngcrush:
   patch_files:
     - 0001-Add-an-install-task.patch
     - 0002-Add-a-configure-script.patch
-    - 0004-Use-cc-by-default-instead-of-gcc.patch
+    - 0003-Use-cc-by-default-instead-of-gcc.patch
 jpegoptim:
   version: 1.4.3
   files:
