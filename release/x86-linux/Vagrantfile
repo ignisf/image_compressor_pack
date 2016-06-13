@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../..", "/libv8"
+  config.vm.synced_folder "../..", "/image_compressor_pack"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -73,7 +73,12 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-    sudo apt-get install -y build-essential git python ruby ruby-dev
-    gem install bundler
+    sudo apt-get install -y software-properties-common
+    sudo apt-add-repository ppa:brightbox/ruby-ng
+    sudo apt-get update
+    sudo apt-get dist-upgrade -y
+    sudo apt-get install -y build-essential git ruby-switch ruby2.3 ruby2.3-dev
+    sudo ruby-switch --set ruby2.3
+    sudo gem install bundler
   SHELL
 end
