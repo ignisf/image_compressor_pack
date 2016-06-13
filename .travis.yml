@@ -23,6 +23,9 @@ matrix:
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then gem update bundler; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo gem install bundler; fi
+script:
+  - bundle exec rake
+  - bundle exec rake binary
 cache:
   bundler: true
   directories:
