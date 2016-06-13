@@ -23,6 +23,7 @@ matrix:
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then gem update bundler; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo gem install bundler; fi
+  - openssl aes-256-cbc -K $encrypted_1cde861aeb23_key -iv $encrypted_1cde861aeb23_iv -in certs/travis_key.pem.enc -out ${HOME}/.ssh/gem-private_key.pem -d
 script:
   - bundle exec rake
   - bundle exec rake binary
