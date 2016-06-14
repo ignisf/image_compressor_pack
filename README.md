@@ -9,7 +9,13 @@ compilation from source.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+The gem is distributed in both source and binary form. The binary version
+contain statically linked executables for Linux and FreeBSD and dynamically
+linked ones for Mac OS X.
+
+### Using the source version
+
+To compile from source, add this line to your application's Gemfile:
 
 ```ruby
 gem 'image_compressor_pack', github: 'ignisf/image_compressor_pack'
@@ -18,6 +24,23 @@ gem 'image_compressor_pack', github: 'ignisf/image_compressor_pack'
 And then execute:
 
     $ bundle
+
+### Using the binary version
+
+If you don't particularly care about using a source version and you want to get
+going as quick as possible, add this to your application's Gemfile:
+
+```ruby
+gem 'image_compressor_pack'
+```
+
+And then execute:
+
+    $ bundle
+
+This will download and install a binary version of the gem if there is one for
+your platform. If there isn't it will download the source version which will
+automatically compile all the utilities.
 
 ## Usage
 
