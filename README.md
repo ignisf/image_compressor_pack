@@ -1,4 +1,6 @@
 # Image Compressor Pack
+[![Gem Version](https://badge.fury.io/rb/image_compressor_pack.svg)](https://badge.fury.io/rb/image_compressor_pack)
+[![Build Status](https://travis-ci.org/ignisf/image_compressor_pack.svg?branch=master)](https://travis-ci.org/ignisf/image_compressor_pack)
 
 A source distribution of a bunch of lossy and lossless image optimisation
 utilities for use with `image_optim`. Created because I didn't trust the
