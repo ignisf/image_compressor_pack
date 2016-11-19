@@ -16,8 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/ignisf/image_compressor_pack"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.files        += `git ls-files -o -z ports/archives`.split("\x0")
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|release|bin)/}) }
   spec.require_paths = ["lib"]
   spec.extensions    = ["ext/image_compressor_pack/extconf.rb"]
 
