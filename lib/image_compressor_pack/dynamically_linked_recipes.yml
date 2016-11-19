@@ -1,8 +1,8 @@
 nasm:
-  version: 2.12.01
+  version: 2.12.02
   files:
-    - :url: http://www.nasm.us/pub/nasm/releasebuilds/2.12.01/nasm-2.12.01.tar.gz
-      :sha256: 4cab94c041ae85740b47d92d0a25dd2325f05b2378dcf6fac4d09c49c62ee481
+    - :url: http://www.nasm.us/pub/nasm/releasebuilds/2.12.02/nasm-2.12.02.tar.gz
+      :sha256: b7346d827b282ccf70608fe90b9bcf27effb1ddbd1bcba8a5ab4be95284fd01b
 zlib:
   version: 1.2.8
   files:
@@ -10,15 +10,16 @@ zlib:
       :md5: 44d667c142d7cda120332623eab69f40
   configure_options: ['--static']
 lcms2:
-  version: 2.7
+  version: 2.8
   files:
-    - :url: http://download.sourceforge.net/lcms/lcms2-2.7.tar.gz
-      :sha256: 4524234ae7de185e6b6da5d31d6875085b2198bc63b1211f7dde6e2d197d6a53
+    - :url: http://downloads.sourceforge.net/project/lcms/lcms/2.8/lcms2-2.8.tar.gz
+      :sha256: 66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22
+  configure_options: ['--enable-static', '--disable-shared', '--without-jpeg', '--without-tiff']
 libpng:
-  version: 1.6.21
+  version: 1.6.26
   files:
-    - :url: http://download.sourceforge.net/libpng/libpng-1.6.21.tar.gz
-      :md5: aca36ec8e0a3b406a5912243bc243717
+    - :url: http://downloads.sourceforge.net/project/libpng/libpng16/1.6.26/libpng-1.6.26.tar.gz
+      :md5: 236cd975520fc1f34cc0b8f0e615f7a0
   patch_files:
     - 0001-Do-not-build-binary-utilities.patch
   configure_options: ['--enable-static', '--disable-shared', '--without-binconfigs', '--disable-unversioned-libpng-pc', '--disable-unversioned-libpng-config']
@@ -37,10 +38,10 @@ optipng:
       :sha256: 4870631fcbd3825605f00a168b8debf44ea1cda8ef98a73e5411eee97199be80
   configure_options: ['-with-system-libs']
 pngquant:
-  version: 2.7.1
+  version: 2.8.0
   files:
-    - :url: https://github.com/pornel/pngquant/archive/2.7.1.tar.gz
-      :sha256: e8645bea07ef255c102f053d3566ac00e64005aa0e68a2c9f00bc39e575f1dfd
+    - :url: https://pngquant.org/pngquant-2.8.0-src.tar.gz
+      :sha1: f4428793dbc439a12bc67c7a585aa2fb9b86b349
   patch_files:
     - 0001-Work-around-mini-portile-s-configure-invocation.patch
     - 0002-Add-default-LDFLAGS.patch
@@ -51,10 +52,12 @@ pngquant:
     - 0007-Use-cc-instead-of-gcc-by-default.patch
   configure_options: []
 advancecomp:
-  version: 1.20
+  version: 1.22
   files:
-    - :url: https://github.com/amadvance/advancecomp/releases/download/v1.20/advancecomp-1.20.tar.gz
-      :sha256: 590a447cfc7ab3a37ec707e13967a0046a81a888c561ebaff5415b1e946da67b
+    - :url: https://github.com/amadvance/advancecomp/releases/download/v1.22/advancecomp-1.22.tar.gz
+      :sha256: 31dec84049b919176d14070b8e6f97e086a0ddcd24ff1b83cf498245ece6607d
+  patch_files:
+    - 0001-Add-missing-libdeflate-header-file.patch
 gifsicle:
   version: 1.88
   files:
@@ -72,19 +75,19 @@ jhead:
     - 0003-Make-the-configure-script-set-the-DESTDIR.patch
     - 0004-Make-the-makefile-install-to-the-proper-location.patch
 pngcrush:
-  version: 1.8.1
+  version: 1.8.10
   files:
-    - :url: http://downloads.sourceforge.net/project/pmt/pngcrush/1.8.1/pngcrush-1.8.1.tar.gz
-      :sha256: ab299feb0dd77d2e84a043cf773302ad6323733d9b82e8ce76468dd024c0ad63
+    - :url: http://downloads.sourceforge.net/project/pmt/pngcrush/1.8.10/pngcrush-1.8.10.tar.gz
+      :sha256: ed8dc4759d5067ebf53a2a5188eff1e8ad10262737cf50516cccf8c60d220b6d
   patch_files:
     - 0001-Add-an-install-task.patch
     - 0002-Add-a-configure-script.patch
     - 0003-Use-cc-by-default-instead-of-gcc.patch
 jpegoptim:
-  version: 1.4.3
+  version: 1.4.4
   files:
-    - :url: http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
-      :sha256: 233d4ae09273cb977e162671f4767be7ef5d96e8c1888d3ed4aa70c4dac1a34c
+    - :url: http://www.kokkonen.net/tjko/src/jpegoptim-1.4.4.tar.gz
+      :sha256: 89a03ea2dfe9483dfb2e009a2851be0befb0deb7cb45c04550bcc91e1e88c1b2
   patch_files:
     - 0001-Link-lm-after-ljpeg.patch
 jpeg-archive:

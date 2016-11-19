@@ -1,4 +1,4 @@
-From 7f1e5ded3dd2ef10e5740d2185a168b5701bbc47 Mon Sep 17 00:00:00 2001
+From 2146fa99889f5005f2979bd48aefb0805333c442 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 02:03:46 +0300
 Subject: [PATCH 4/4] Produce a static binary
@@ -8,12 +8,12 @@ Subject: [PATCH 4/4] Produce a static binary
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 6f53ade..ac4f3ab 100644
+index 6735f96..445e2d0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -38,7 +38,7 @@ TOOFAR_OK=
- CFLAGS = -O3 -funroll-loops -fomit-frame-pointer
- # [note that -Wall is a gcc-specific compilation flag ("all warnings on")]
+@@ -39,7 +39,7 @@ CPPFLAGS += -DNO_GZ
+ # Cannot use this with libpng15 and later.
+ # CPPFLAGS += -DINFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
  
 -LDFLAGS =
 +LDFLAGS = -static
@@ -21,5 +21,5 @@ index 6f53ade..ac4f3ab 100644
  E =
  
 -- 
-2.8.3
+2.10.2
 

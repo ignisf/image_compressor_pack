@@ -1,4 +1,4 @@
-From dad6e24886adbf10959492caf90fbe85572adf6d Mon Sep 17 00:00:00 2001
+From 690529369b17d770d9c453b574a4287ae197cd0b Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 03:05:23 +0300
 Subject: [PATCH 3/7] Disable libpng check
@@ -8,10 +8,10 @@ Subject: [PATCH 3/7] Disable libpng check
  1 file changed, 2 insertions(+), 50 deletions(-)
 
 diff --git a/configure.bash b/configure.bash
-index a1ec1de..94598bf 100755
+index 25e293c..984001f 100755
 --- a/configure.bash
 +++ b/configure.bash
-@@ -347,58 +347,10 @@ fi
+@@ -349,58 +349,10 @@ fi
  
  # libpng
  # try if given flags are enough
@@ -73,5 +73,5 @@ index a1ec1de..94598bf 100755
          LIBPNG_CMD='`brew install libpng`'
      else
 -- 
-2.8.3
+2.10.2
 

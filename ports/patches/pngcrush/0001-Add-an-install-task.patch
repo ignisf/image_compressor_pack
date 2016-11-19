@@ -1,4 +1,4 @@
-From 8868eb72ea64fef8193b71c9372373e4aebdd4fd Mon Sep 17 00:00:00 2001
+From bdd59bb4dabe1ac23b004cf3fdb40a8b3e1c4aa2 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:45:07 +0200
 Subject: [PATCH 1/4] Add an install task
@@ -8,19 +8,19 @@ Subject: [PATCH 1/4] Add an install task
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index c57c267..0391a49 100644
+index f4edc3c..dbaf850 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -14,6 +14,8 @@
- #ZINC = ../../zlib
- #ZLIB = ../../zlib
+@@ -12,6 +12,8 @@
+ 
+ # macros --------------------------------------------------------------------
  
 +DESTDIR=.
 +
  CC = gcc
  LD = gcc
  RM = rm -f
-@@ -91,3 +93,7 @@ $(PNGCRUSH)$(E): $(OBJS)
+@@ -89,3 +91,7 @@ $(PNGCRUSH)$(E): $(OBJS)
  
  clean:
  	$(RM) $(EXES) $(OBJS)
@@ -29,5 +29,5 @@ index c57c267..0391a49 100644
 +	mkdir -p ${DESTDIR}/bin/
 +	cp $(PNGCRUSH)$(E) ${DESTDIR}/bin/
 -- 
-2.8.3
+2.10.2
 
