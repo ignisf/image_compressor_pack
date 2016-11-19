@@ -13,9 +13,9 @@ The gem is distributed in both source and binary form. The binary version
 contain statically linked executables for Linux and FreeBSD and dynamically
 linked ones for Mac OS X.
 
-### Using the source version
+### Using the gem
 
-To compile from source, add this line to your application's Gemfile:
+Add this line to your application's Gemfile:
 
 ```ruby
 gem 'image_compressor_pack'
