@@ -18,19 +18,6 @@ linked ones for Mac OS X.
 To compile from source, add this line to your application's Gemfile:
 
 ```ruby
-gem 'image_compressor_pack', github: 'ignisf/image_compressor_pack'
-```
-
-And then execute:
-
-    $ bundle
-
-### Using the binary version
-
-If you don't particularly care about using a source version and you want to get
-going as quick as possible, add this to your application's Gemfile:
-
-```ruby
 gem 'image_compressor_pack'
 ```
 
@@ -38,9 +25,20 @@ And then execute:
 
     $ bundle
 
-This will download and install a binary version of the gem if there is one for
-your platform. If there isn't it will download the source version which will
-automatically compile all the utilities.
+### Versioning
+
+Starting with `image_compressor_pack` `1.0.0.0`, all even point releases contain
+only a source-based distribution, while odd point releases contain both a
+source-based distribution *and* binary distributions. However both point
+releases correspond to the *exact* underlying code. The only difference is the
+version number.
+
+This way, the most recent version of the gem always has binary distributions,
+but if you don't want to use the binaries, you can always "lock in" your
+dependency a single point version down, forcing it to compile from source.
+
+So for example, `1.0.0.1` contains all the binary distributions, while `1.0.0.0`
+is the exact same code, but contain only a source-based distribution.
 
 ## Usage
 
