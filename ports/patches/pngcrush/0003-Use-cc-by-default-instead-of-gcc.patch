@@ -1,4 +1,4 @@
-From 5a5a34fc2899f79983c46ebe24c83ceee2f3fc79 Mon Sep 17 00:00:00 2001
+From 4aa8b4107db2c28906c58290860049b5223a1473 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Mon, 13 Jun 2016 23:33:27 +0300
 Subject: [PATCH 3/4] Use cc by default instead of gcc
@@ -8,7 +8,7 @@ Subject: [PATCH 3/4] Use cc by default instead of gcc
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index dbaf850..6735f96 100644
+index b87bbec..1eedcf9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -14,8 +14,8 @@
@@ -16,12 +16,12 @@ index dbaf850..6735f96 100644
  DESTDIR=.
  
 -CC = gcc
--LD = gcc
+-LD = $(CC)
 +CC = cc
 +LD = cc
  RM = rm -f
  
  # On some platforms you might need to comment this out:
 -- 
-2.10.2
+2.12.0
 

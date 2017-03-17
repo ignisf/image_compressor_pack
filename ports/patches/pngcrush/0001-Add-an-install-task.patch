@@ -1,4 +1,4 @@
-From bdd59bb4dabe1ac23b004cf3fdb40a8b3e1c4aa2 Mon Sep 17 00:00:00 2001
+From 90994d5be80df0c62cb392cac8c263f93514440c Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sun, 22 Nov 2015 18:45:07 +0200
 Subject: [PATCH 1/4] Add an install task
@@ -8,7 +8,7 @@ Subject: [PATCH 1/4] Add an install task
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index f4edc3c..dbaf850 100644
+index 226a293..b87bbec 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -12,6 +12,8 @@
@@ -18,7 +18,7 @@ index f4edc3c..dbaf850 100644
 +DESTDIR=.
 +
  CC = gcc
- LD = gcc
+ LD = $(CC)
  RM = rm -f
 @@ -89,3 +91,7 @@ $(PNGCRUSH)$(E): $(OBJS)
  
@@ -29,5 +29,5 @@ index f4edc3c..dbaf850 100644
 +	mkdir -p ${DESTDIR}/bin/
 +	cp $(PNGCRUSH)$(E) ${DESTDIR}/bin/
 -- 
-2.10.2
+2.12.0
 

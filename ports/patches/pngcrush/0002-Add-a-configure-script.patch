@@ -1,4 +1,4 @@
-From cb9a2cf59b05d088a478186a0043f3513530eff4 Mon Sep 17 00:00:00 2001
+From 5c745ca9ede7e3b344f109ba5d7225519d840fd4 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Sat, 19 Nov 2016 12:49:12 +0200
 Subject: [PATCH 2/4] Add a configure script
@@ -62,5 +62,5 @@ index 0000000..6af6f2f
 +
 +sed -i.bak "$sed_config" Makefile
 -- 
-2.10.2
+2.12.0
 

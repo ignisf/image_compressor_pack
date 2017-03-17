@@ -1,4 +1,4 @@
-From 2146fa99889f5005f2979bd48aefb0805333c442 Mon Sep 17 00:00:00 2001
+From ee70daf5e5b0eb37219c10a08ad96e071a11dd14 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 02:03:46 +0300
 Subject: [PATCH 4/4] Produce a static binary
@@ -8,7 +8,7 @@ Subject: [PATCH 4/4] Produce a static binary
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 6735f96..445e2d0 100644
+index 1eedcf9..744c771 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -39,7 +39,7 @@ CPPFLAGS += -DNO_GZ
@@ -21,5 +21,5 @@ index 6735f96..445e2d0 100644
  E =
  
 -- 
-2.10.2
+2.12.0
 

@@ -1,4 +1,4 @@
-From 385fbd4001e83ce498782b63dac7e70bb444707d Mon Sep 17 00:00:00 2001
+From 809b32f895286d1b6be4c941f6f56efcad77427f Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 02:54:43 +0300
 Subject: [PATCH 2/7] Add default LDFLAGS
@@ -20,5 +20,5 @@ index cb4d3ad..25e293c 100755
  EXTRA_LDFLAGS=
  
 -- 
-2.10.2
+2.12.0
 

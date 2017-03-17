@@ -1,4 +1,4 @@
-From 690529369b17d770d9c453b574a4287ae197cd0b Mon Sep 17 00:00:00 2001
+From efe50886a551110380550aa0d1055b4ea9980043 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 03:05:23 +0300
 Subject: [PATCH 3/7] Disable libpng check
@@ -73,5 +73,5 @@ index 25e293c..984001f 100755
          LIBPNG_CMD='`brew install libpng`'
      else
 -- 
-2.10.2
+2.12.0
 

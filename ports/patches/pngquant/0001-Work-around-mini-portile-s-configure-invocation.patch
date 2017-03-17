@@ -1,25 +1,29 @@
-From 55530ff8670a0cff7c8d2082cfcb6ea43eab8df3 Mon Sep 17 00:00:00 2001
+From f25d024002e233948d25d6882c1ba39613e9c161 Mon Sep 17 00:00:00 2001
 From: Petko Bordjukov <bordjukov@gmail.com>
 Date: Thu, 9 Jun 2016 02:51:12 +0300
 Subject: [PATCH 1/7] Work around mini portile's configure invocation
 
 ---
- configure      | 474 +--------------------------------------------------------
- configure.bash | 472 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 474 insertions(+), 472 deletions(-)
+ configure      | 484 +--------------------------------------------------------
+ configure.bash | 472 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 474 insertions(+), 482 deletions(-)
  create mode 100755 configure.bash
 
 diff --git a/configure b/configure
-index cb4d3ad..49e92d0 100755
+index 034e329..49e92d0 100755
 --- a/configure
 +++ b/configure
-@@ -1,472 +1,2 @@
+@@ -1,482 +1,2 @@
 -#!/usr/bin/env bash
 -
 -CONFIG="config.mk"
 -PREFIX="/usr/local"
 -
--test -f lib/libimagequant.h || { git submodule init && git submodule update; }
+-test -f lib/libimagequant.h || { git submodule init && git submodule update; } || {
+-    echo "error: libimagequant not found in ./lib/"
+-    echo "If you're using git, do clone with --recursive, or download from https://github.com/ImageOptim/libimagequant"
+-    exit 1;
+-}
 -VERSION=$(grep LIQ_VERSION_STRING lib/libimagequant.h | grep -Eo "2\.[0-9.]+")
 -
 -DEBUG=
@@ -258,9 +262,12 @@ index cb4d3ad..49e92d0 100755
 -
 -echo
 -
--# basic check
--if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - > /dev/null; then
--    error "Compiler" "$CC failed to compile anything (make sure it's installed and supports C99)"
+-# mingw has problems opening /dev/null and gives false negative
+-if echo "uh, nothing works on Windows" | tee /dev/null > /dev/null; then
+-    # basic check
+-    if ! echo "int main(){}" | "$CC" -xc -std=c99 -o /dev/null - > /dev/null; then
+-        error "Compiler" "$CC failed to compile anything (make sure it's installed and supports C99)"
+-    fi
 -fi
 -
 -status "Compiler" "$CC"
@@ -280,9 +287,12 @@ index cb4d3ad..49e92d0 100755
 -
 -# SSE
 -if [ "$SSE" = 'auto' ]; then
--    if [[ "$(uname -m)" =~ (amd|x86_)64 ||
--          "$(grep -E -m1 "^flags" /proc/cpuinfo)" =~ "sse" ]]; then
--        SSE=1
+-    SSE=0
+-    if type uname > /dev/null; then
+-        if [[ "$(uname -m)" =~ "amd64" || "$(uname -m)" =~ "x86_64" ||
+-              "$(grep -E -m1 "^flags" /proc/cpuinfo)" =~ "sse" ]]; then
+-            SSE=1
+-        fi
 -    fi
 -fi
 -
@@ -967,5 +977,5 @@ index 0000000..cb4d3ad
 +# Configure static library the same way
 +cp "$CONFIG" lib/
 -- 
-2.10.2
+2.12.0
 

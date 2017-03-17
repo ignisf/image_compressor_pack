@@ -5,22 +5,22 @@ nasm:
       :sha256: b7346d827b282ccf70608fe90b9bcf27effb1ddbd1bcba8a5ab4be95284fd01b
   configure_options: ['LDFLAGS=-static']
 zlib:
-  version: 1.2.8
+  version: 1.2.11
   files:
-    - :url: http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/zlib-1.2.8.tar.gz
-      :md5: 44d667c142d7cda120332623eab69f40
+    - :url: http://www.zlib.net/zlib-1.2.11.tar.gz
+      :sha256: c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
   configure_options: ['--static']
 lcms2:
   version: 2.8
   files:
-    - :url: http://downloads.sourceforge.net/project/lcms/lcms/2.8/lcms2-2.8.tar.gz
+    - :url: https://downloads.sourceforge.net/project/lcms/lcms/2.8/lcms2-2.8.tar.gz
       :sha256: 66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22
   configure_options: ['--enable-static', '--disable-shared', '--without-jpeg', '--without-tiff']
 libpng:
-  version: 1.6.26
+  version: 1.6.28
   files:
-    - :url: http://downloads.sourceforge.net/project/libpng/libpng16/1.6.26/libpng-1.6.26.tar.gz
-      :md5: 236cd975520fc1f34cc0b8f0e615f7a0
+    - :url: https://downloads.sourceforge.net/project/libpng/libpng16/1.6.28/libpng-1.6.28.tar.gz
+      :md5: 897ccec1ebfb0922e83c2bfaa1be8748
   patch_files:
     - 0001-Do-not-build-binary-utilities.patch
   configure_options: ['--enable-static', '--disable-shared', '--without-binconfigs', '--disable-unversioned-libpng-pc', '--disable-unversioned-libpng-config']
@@ -36,16 +36,16 @@ mozjpeg:
 optipng:
   version: 0.7.6
   files:
-    - :url: http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz
+    - :url: https://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.6/optipng-0.7.6.tar.gz
       :sha256: 4870631fcbd3825605f00a168b8debf44ea1cda8ef98a73e5411eee97199be80
   configure_options: ['-with-system-libs', 'LDFLAGS=-static']
   patch_files:
     - 0001-Allow-passing-LDFLAGS-as-configure-arg.patch
 pngquant:
-  version: 2.8.0
+  version: 2.9.0
   files:
-    - :url: https://pngquant.org/pngquant-2.8.0-src.tar.gz
-      :sha1: f4428793dbc439a12bc67c7a585aa2fb9b86b349
+    - :url: https://pngquant.org/pngquant-2.9.0-src.tar.gz
+      :sha1: eb04e40894447dee154cff49abd42b863cb08666
   patch_files:
     - 0001-Work-around-mini-portile-s-configure-invocation.patch
     - 0002-Add-default-LDFLAGS.patch
@@ -55,12 +55,10 @@ pngquant:
     - 0007-Use-cc-instead-of-gcc-by-default.patch
   configure_options: ['--extra-ldflags=-lpng']
 advancecomp:
-  version: 1.22
+  version: 1.23
   files:
-    - :url: https://github.com/amadvance/advancecomp/releases/download/v1.22/advancecomp-1.22.tar.gz
-      :sha256: 31dec84049b919176d14070b8e6f97e086a0ddcd24ff1b83cf498245ece6607d
-  patch_files:
-    - 0001-Add-missing-libdeflate-header-file.patch
+    - :url: https://github.com/amadvance/advancecomp/releases/download/v1.23/advancecomp-1.23.tar.gz
+      :sha256: 75a2c97ab0cd53e71b6a3dd7f07c001fa02351c9d781a4c586718f7fea3e88ba
   configure_options: ['LDFLAGS=-static']
 gifsicle:
   version: 1.88
@@ -80,10 +78,10 @@ jhead:
     - 0004-Make-the-makefile-install-to-the-proper-location.patch
     - 0005-Produce-a-static-binary.patch
 pngcrush:
-  version: 1.8.10
+  version: 1.8.11
   files:
-    - :url: http://downloads.sourceforge.net/project/pmt/pngcrush/1.8.10/pngcrush-1.8.10.tar.gz
-      :sha256: ed8dc4759d5067ebf53a2a5188eff1e8ad10262737cf50516cccf8c60d220b6d
+    - :url: https://downloads.sourceforge.net/project/pmt/pngcrush/1.8.11/pngcrush-1.8.11.tar.gz
+      :sha256: cca659abbe131d45a7742e97c2cd0e691298d85908abc55e15b1506326b3b195
   patch_files:
     - 0001-Add-an-install-task.patch
     - 0002-Add-a-configure-script.patch
