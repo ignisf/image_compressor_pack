@@ -9,7 +9,7 @@ compilation from source.
 
 ## Installation
 
-The gem is distributed in both source and binary form. The binary version
+The gem is distributed in both source and binary form. The binary versions
 contain statically linked executables for Linux and FreeBSD and dynamically
 linked ones for Mac OS X.
 
@@ -64,8 +64,9 @@ using `image_optim` and `image_compressor_pack` outside of Rails.
 
 ## Note on the security of this gem
 
-The packaged utilities are pretty niche and I wouldn't use them on images from
-untrusted parties. Do so on your own responsibility.
+Some of the packaged utilities are pretty niche, and the popular ones often have
+security issues. I wouldn't use them on images from untrusted parties. Do so on
+your own responsibility.
 
 The .gem files I produce on trusted systems are signed with the certificate in
 the `certs` directory. There's an OpenPGP signature there, too. It can be used
