@@ -23,7 +23,9 @@ module ImageCompressorPack
     recipes = YAML.load_file(file)
 
     recipes.map do |name, parameters|
-      MiniPortile.new(name, parameters['version']).tap do |recipe|
+      klass = parameters['cmake'] ? MiniPortileCMake : MiniPortile
+
+      klass.new(name, parameters['version']).tap do |recipe|
         recipe.files = parameters['files']
         recipe.target = if parameters['target'].nil?
                           File.expand_path('../../../ports', __FILE__)
