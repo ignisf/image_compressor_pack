@@ -1,0 +1,25 @@
+From 1a31706248b9b1917a9f1dcafa02896165fa6cb7 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Sat, 18 Mar 2017 00:33:43 +0200
+Subject: [PATCH 4/4] Produce a statically linked binary
+
+---
+ guetzli.make | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/guetzli.make b/guetzli.make
+index 46db32a..a7290fb 100644
+--- a/guetzli.make
++++ b/guetzli.make
+@@ -24,7 +24,7 @@ ifeq ($(config),release)
+   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
+   LIBS += -lpng -lgflags_nothreads -lz -lpthread
+   LDDEPS +=
+-  ALL_LDFLAGS += $(LDFLAGS)
++  ALL_LDFLAGS += $(LDFLAGS) -static
+   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+   PREFIX = /usr/local
+   define PREBUILDCMDS
+-- 
+2.12.0
+

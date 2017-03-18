@@ -1,0 +1,58 @@
+From 446fa51892d07720088c9e47fefc5da92a512e93 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Fri, 17 Mar 2017 23:04:26 +0200
+Subject: [PATCH 2/4] Add an install task to the Makefile
+
+---
+ Makefile     | 3 +++
+ guetzli.make | 6 ++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 8432a64..70909b8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -32,6 +32,9 @@ endif
+ clean:
+ 	@${MAKE} --no-print-directory -C . -f guetzli.make clean
+ 
++install:
++	@${MAKE} --no-print-directory -C . -f guetzli.make install
++
+ help:
+ 	@echo "Usage: make [config=name] [target]"
+ 	@echo ""
+diff --git a/guetzli.make b/guetzli.make
+index 1a8febc..9b75e8e 100644
+--- a/guetzli.make
++++ b/guetzli.make
+@@ -26,6 +26,7 @@ ifeq ($(config),release)
+   LDDEPS +=
+   ALL_LDFLAGS += $(LDFLAGS) -s
+   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
++  PREFIX = /usr/local
+   define PREBUILDCMDS
+   endef
+   define PRELINKCMDS
+@@ -53,6 +54,7 @@ ifeq ($(config),debug)
+   LDDEPS +=
+   ALL_LDFLAGS += $(LDFLAGS)
+   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
++  PREFIX = /usr/local
+   define PREBUILDCMDS
+   endef
+   define PRELINKCMDS
+@@ -130,6 +132,10 @@ else
+ 	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
+ endif
+ 
++install: $(TARGET)
++	mkdir -p $(PREFIX)/bin
++	cp $(TARGET) $(PREFIX)/bin/guetzli
++
+ prebuild:
+ 	$(PREBUILDCMDS)
+ 
+-- 
+2.12.0
+
