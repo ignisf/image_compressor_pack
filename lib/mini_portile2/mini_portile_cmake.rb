@@ -1,4 +1,9 @@
 require 'mini_portile2/mini_portile'
+class MiniPortile
+  def self.windows?
+    RbConfig::CONFIG['target_os'] =~ /mswin|mingw32/
+  end
+end
 
 class MiniPortileCMake < MiniPortile
   def configure_prefix
