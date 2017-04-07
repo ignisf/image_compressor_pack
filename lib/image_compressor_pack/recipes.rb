@@ -1,6 +1,7 @@
 require 'mini_portile2'
 require 'yaml'
 require 'rbconfig'
+require_relative '../mini_portile2/mini_portile_cmake'
 
 module ImageCompressorPack
   def self.recipes
