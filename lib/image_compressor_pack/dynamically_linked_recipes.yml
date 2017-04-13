@@ -98,18 +98,11 @@ jpeg-archive:
     - 0002-Use-our-mozjpeg.patch
     - 0003-Use-cc-instead-of-gcc-by-default.patch
   configure_options: []
-gflags:
-  version: 2.2.0
-  files:
-    - :url: https://github.com/gflags/gflags/archive/v2.2.0.tar.gz
-      :sha256: 466c36c6508a451734e4f4d76825cf9cd9b8716d2b70ef36479ae40f08271f88
-  cmake: true
 guetzli:
-  version: 1.0
+  version: 1.0.1
   files:
-    - :url: https://github.com/google/guetzli/archive/v1.0.tar.gz
-      :sha256: 9766353d4bcfb9ea1c4018770d23a321986cdf1544d0805d14361686d7592c92
+    - :url: https://github.com/google/guetzli/archive/v1.0.1.tar.gz
+      :sha256: e52eb417a5c0fb5a3b08a858c8d10fa797627ada5373e203c196162d6a313697
   patch_files:
     - 0001-Add-a-configure-script.patch
     - 0002-Add-an-install-task-to-the-Makefile.patch
-    - 0003-Fix-compilation-on-old-OSX.patch
